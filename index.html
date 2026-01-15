@@ -193,11 +193,81 @@
 
     <main>
         <div id="chap1" class="section active">
-            <h1>1. Fondements de la Statistique Descriptive</h1>
-            <p>La statistique descriptive permet de résumer l'information contenue dans une série de données via des paramètres de position et de dispersion.</p>
+            <h1>1. La Médiane : Théorie & Interpolation</h1>
+            <p>La médiane ($Me$) est la valeur qui partage une série statistique ordonnée en deux groupes d'effectifs égaux (50% au-dessus, 50% en dessous).</p>
 
-            <h2>A. Paramètres de Position</h2>
-            <p><strong>La Moyenne Arithmétique ($\bar{x}$) :</strong> C'est la valeur centrale théorique.</p>
+            <div class="card" style="border-left: 6px solid #f1c40f; padding: 15px; background: #fffde7; margin-bottom: 20px;">
+                <strong>⚠️ Attention :</strong> Avant tout calcul de médiane, il faut impérativement <strong>trier les données</strong> par ordre croissant.
+            </div>
+
+            <h2>A. Cas d'une série de données brutes</h2>
+            <p>On distingue deux cas selon la taille de l'échantillon ($n$) :</p>
+            <ul>
+                <li><strong>Si $n$ est impair :</strong> La médiane est la valeur centrale située à la position $\frac{n+1}{2}$.</li>
+                <li><strong>Si $n$ est pair :</strong> La médiane est la moyenne des deux valeurs centrales situées aux positions $\frac{n}{2}$ et $\frac{n}{2} + 1$.</li>
+            </ul>
+
+            <div class="exercise-box">
+                <h3>✍️ Mini-Exercice 1 : Série discrète</h3>
+                <p>Soit la série de notes : 12, 15, 8, 19, 11, 14. Calculez la médiane.</p>
+                <button class="btn-show" onclick="toggleAnswer('ans_med1')">Voir la méthode</button>
+                <div id="ans_med1" class="answer">
+                    1. On trie : 8, 11, 12, 14, 15, 19. <br>
+                    2. $n = 6$ (pair). <br>
+                    3. Positions centrales : $6/2 = 3$-ème et $4$-ème valeurs. <br>
+                    4. Valeurs : 12 et 14. <br>
+                    5. $Me = (12+14)/2 = \mathbf{13}$.
+                </div>
+            </div>
+
+            <h2>B. Cas des données regroupées en classes (Interpolation)</h2>
+            <p>C'est le cas le plus fréquent dans vos cours. On utilise les fréquences cumulées croissantes ($FCC$).</p>
+            
+            <div class="hypothesis-box">
+                <strong>Étape 1 :</strong> Identifier la <strong>classe médiane</strong>. C'est la classe où la fréquence cumulée atteint ou dépasse 0,5 (50%). <br>
+                <strong>Étape 2 :</strong> Appliquer la formule d'interpolation linéaire :
+            </div>
+
+            <div class="formula-card">
+                $$\frac{Me - x_i}{0.5 - F(x_i)} = \frac{x_{i+1} - x_i}{F(x_{i+1}) - F(x_i)}$$
+            </div>
+
+            <p>Où :</p>
+            <ul>
+                <li>$x_i$ : Borne inférieure de la classe médiane.</li>
+                <li>$x_{i+1}$ : Borne supérieure de la classe médiane.</li>
+                <li>$F(x_i)$ : Fréquence cumulée à la borne inférieure.</li>
+                <li>$F(x_{i+1})$ : Fréquence cumulée à la borne supérieure.</li>
+            </ul>
+
+            <div class="exercise-box" style="border: 2px solid var(--primary);">
+                <h3>🏋️ EXERCICE D'EXAMEN : Données Groupées</h3>
+                <p>On étudie le temps de trajet de 2500 salariés (données du cours du 29 sept) :</p>
+                <table>
+                    <tr>
+                        <th>Classes (min)</th>
+                        <th>Effectifs ($n_i$)</th>
+                        <th>Fréq. Cumulées ($F_i$)</th>
+                    </tr>
+                    <tr><td>[15,5 ; 20,5[</td><td>200</td><td>0,08</td></tr>
+                    <tr><td>[20,5 ; 25,5[</td><td>500</td><td>0,28</td></tr>
+                    <tr style="background: #fff9c4;"><td><strong>[25,5 ; 30,5[</strong></td><td><strong>1000</strong></td><td><strong>0,68</strong></td></tr>
+                    <tr><td>[30,5 ; 35,5[</td><td>600</td><td>0,92</td></tr>
+                    <tr><td>[35,5 ; 40,5[</td><td>200</td><td>1,00</td></tr>
+                </table>
+                <p><strong>Question : Calculez la médiane exacte par interpolation.</strong></p>
+                <button class="btn-show" onclick="toggleAnswer('ans_med_interp')">Vérifier le calcul détaillé</button>
+                <div id="ans_med_interp" class="answer">
+                    <strong>1. Classe médiane :</strong> On cherche 0.5. À 25.5 min, on est à 0.28. À 30.5 min, on est à 0.68. La médiane est donc dans la classe <strong>[25,5 ; 30,5[</strong>. <br><br>
+                    <strong>2. Application de la formule :</strong> <br>
+                    $x_i = 25.5$ | $x_{i+1} = 30.5$ <br>
+                    $F(x_i) = 0.28$ | $F(x_{i+1}) = 0.68$ <br><br>
+                    $\frac{Me - 25.5}{0.5 - 0.28} = \frac{30.5 - 25.5}{0.68 - 0.28}$ <br><br>
+                    $\frac{Me - 25.5}{0.22} = \frac{5}{0.4}$ <br><br>
+                    $Me - 25.5 = 12.5 \times 0.22 = 2.75$ <br>
+                    $Me = 25.5 + 2.75 = \mathbf{28.25 \text{ min}}$
+                </div>
+            </div>
             <div class="formula-card">
                 $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
             </div>
@@ -480,3 +550,4 @@
     </script>
 </body>
 </html>
+
