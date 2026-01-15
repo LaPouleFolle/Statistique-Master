@@ -335,18 +335,95 @@
         </div>
 
         <div id="chap3" class="section">
-            <h1>3. Variables Aléatoires & Loi Normale</h1>
-            <p>Passage de la statistique descriptive à la théorie probabiliste.</p>
+            <h1>3. La Loi Normale $N(\mu, \sigma)$ : Maîtriser les Calculs</h1>
+            <p>La loi normale est la distribution la plus utilisée en statistiques car elle modélise les phénomènes naturels où les valeurs se regroupent autour d'une moyenne.</p>
 
-            <h2>A. Espérance et Variance théorique</h2>
+            
+
+            <h2>A. Démonstration : Pourquoi "Centrer" et "Réduire" ?</h2>
+            <p>Calculer une probabilité directement avec la fonction de densité de la loi normale est complexe :
+            $$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2} \left(\frac{x-\mu}{\sigma}\right)^2}$$
+            Pour éviter d'utiliser cette intégrale, on transforme n'importe quelle variable $X$ en une variable <strong>Standard $Z$</strong> qui suit une loi $N(0, 1)$.</p>
+
             <div class="formula-card">
-                $$E(X) = \mu \quad \text{et} \quad V(X) = \sigma^2$$
+                <strong>La formule de transformation :</strong>
+                $$Z = \frac{X - \mu}{\sigma}$$
+            </div>
+            <ul>
+                <li><strong>Centrer :</strong> On soustrait $\mu$ pour que la nouvelle moyenne soit 0.</li>
+                <li><strong>Réduire :</strong> On divise par $\sigma$ pour que le nouvel écart-type soit 1.</li>
+            </ul>
+
+            <hr>
+
+            <h2>B. Cas n°1 : Calculer une probabilité (Trouver $P$)</h2>
+            <p><em>Exemple : "Quelle est la probabilité qu'un individu gagne moins de 2500€ ?"</em></p>
+            <div class="hypothesis-box">
+                <strong>Méthode :</strong>
+                <ol>
+                    <li>On pose la valeur $X = 2500$.</li>
+                    <li>On calcule $Z = \frac{2500 - \mu}{\sigma}$.</li>
+                    <li>On cherche la valeur de $Z$ dans la <strong>Table de la Loi Normale</strong> pour obtenir la probabilité.</li>
+                </ol>
             </div>
 
-            <h2>B. La Loi Normale $N(\mu, \sigma)$</h2>
-            <p>La "Courbe en Cloche". Propriété de centrage et réduction :</p>
+            <div class="exercise-box">
+                <h3>✍️ Exercice 3.1 : Trouver la probabilité</h3>
+                <p>Dans une entreprise, le salaire moyen est $\mu = 2200€$ avec un écart-type $\sigma = 300€$. <br>
+                <strong>Question :</strong> Quel est le pourcentage de salariés gagnant moins de 2500€ ?</p>
+                <button class="btn-show" onclick="toggleAnswer('ans_prob1')">Voir la démonstration</button>
+                <div id="ans_prob1" class="answer">
+                    1. On calcule $Z$ : <br>
+                    $Z = \frac{2500 - 2200}{300} = \frac{300}{300} = \mathbf{1}$ <br><br>
+                    2. On regarde dans la table pour $Z = 1.00$ : <br>
+                    $P(Z \le 1) = 0.8413$ <br><br>
+                    <strong>Réponse :</strong> Environ 84,13% des salariés gagnent moins de 2500€.
+                </div>
+            </div>
+
+            <hr>
+
+            <h2>C. Cas n°2 : Le calcul inverse (Trouver $X$)</h2>
+            <p><em>Exemple : "Quel salaire faut-il pour faire partie des 5% les plus riches ?"</em></p>
+            <div class="hypothesis-box">
+                <strong>Méthode :</strong>
+                <ol>
+                    <li>On connaît la probabilité (ex: 0.95 pour le top 5%).</li>
+                    <li>On cherche dans le <strong>corps de la table</strong> la valeur de $Z$ correspondante.</li>
+                    <li>On utilise la formule inverse pour retrouver $X$ :</li>
+                </ol>
+            </div>
+
             <div class="formula-card">
-                $$Z = \frac{X - \mu}{\sigma} \sim N(0,1)$$
+                <strong>Formule pour retrouver X :</strong>
+                $$X = \mu + (Z \cdot \sigma)$$
+            </div>
+
+            <div class="exercise-box" style="border: 2px solid var(--accent);">
+                <h3>🏋️ EXERCICE TYPE EXAMEN : Le calcul inverse</h3>
+                <p>On étudie la taille des joueurs de pétanque (données de ton exercice). <br>
+                La taille moyenne est $\mu = 1.75$m avec $\sigma = 0.08$m. <br>
+                <strong>Question :</strong> Un joueur veut s'inscrire à un tournoi réservé aux 10% des joueurs les plus grands. Quelle taille minimale ($X$) doit-il faire ?</p>
+                <button class="btn-show" onclick="toggleAnswer('ans_inv1')">Vérifier le raisonnement</button>
+                <div id="ans_inv1" class="answer">
+                    1. On cherche les 10% les plus grands, donc la valeur qui laisse <strong>90% (0.90)</strong> derrière elle. <br>
+                    2. Dans la table de la loi normale, la probabilité 0.90 correspond à <strong>$Z \approx 1.28$</strong>. <br>
+                    3. On applique la formule inverse : <br>
+                    $X = \mu + (Z \cdot \sigma)$ <br>
+                    $X = 1.75 + (1.28 \cdot 0.08)$ <br>
+                    $X = 1.75 + 0.1024$ <br>
+                    $X = \mathbf{1.8524 \text{ m}}$ <br><br>
+                    <strong>Conclusion :</strong> Il doit mesurer au moins 1m85.
+                </div>
+            </div>
+
+            <div class="card" style="background: #e1f5fe; padding: 15px;">
+                <h4>💡 Astuces pour l'examen :</h4>
+                <ul>
+                    <li>Si on cherche $P(X > a)$, le résultat est $1 - P(X \le a)$.</li>
+                    <li>Si $Z$ est négatif (valeur sous la moyenne), on utilise la symétrie : $P(Z \le -1.5) = 1 - P(Z \le 1.5)$.</li>
+                </ul>
+            </div>
             </div>
 
             <div class="hypothesis-box">
@@ -550,4 +627,5 @@
     </script>
 </body>
 </html>
+
 
