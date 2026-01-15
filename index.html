@@ -2,286 +2,481 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Master Stats : La Totale Théorique</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Statistique Inférentielle - Cours Complet</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #34495e;
-            --accent: #e67e22;
-            --success: #27ae60;
-            --info: #2980b9;
-            --light: #ecf0f1;
+            --primary: #1a237e;
+            --secondary: #303f9f;
+            --accent: #ff6d00;
+            --bg: #f5f5f5;
+            --white: #ffffff;
+            --text: #212121;
+            --success: #2e7d32;
         }
-        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.7; color: #333; margin: 0; background: #f0f2f5; }
-        header { background: var(--primary); color: white; padding: 2rem; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        
-        .container { max-width: 1200px; margin: 0 auto; display: flex; }
-        
-        /* Navigation latérale */
-        nav { width: 250px; background: var(--secondary); min-height: 100vh; color: white; padding: 1rem 0; position: sticky; top: 0; }
-        nav div { padding: 12px 20px; cursor: pointer; border-bottom: 1px solid #455a64; transition: 0.3s; font-weight: 500; }
-        nav div:hover { background: var(--accent); }
-        nav div.active { background: var(--accent); border-left: 5px solid white; }
 
-        /* Zone de contenu */
-        main { flex: 1; padding: 2rem; background: white; min-height: 100vh; }
-        .section { display: none; animation: fadeIn 0.5s; }
-        .section.active { display: block; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Sidebar Navigation */
+        nav {
+            width: 300px;
+            background-color: var(--primary);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        }
 
-        /* Styles des composants */
-        .formula-block { background: #f8f9fa; border-left: 5px solid var(--info); padding: 20px; margin: 20px 0; font-family: "Cambria", serif; font-size: 1.1rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        .case-study { background: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 8px; margin: 15px 0; }
-        .condition-tag { display: inline-block; background: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; }
-        
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        nav h2 {
+            padding: 20px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            padding: 15px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+
+        nav ul li:hover {
+            background-color: var(--secondary);
+            padding-left: 35px;
+        }
+
+        nav ul li.active {
+            background-color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Main Content Area */
+        main {
+            margin-left: 300px;
+            padding: 40px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & Components */
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+        h2 { color: var(--secondary); margin-top: 30px; }
+        p { line-height: 1.6; font-size: 1.05rem; }
+
+        .formula-card {
+            background: #fff;
+            border-left: 6px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .hypothesis-box {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .condition-badge {
+            background: #f44336;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .exercise-box {
+            background: #f1f8e9;
+            border: 1px dashed var(--success);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+
+        .btn-show {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .answer {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff;
+            border-left: 4px solid var(--success);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
         th { background: var(--primary); color: white; }
-        tr:nth-child(even) { background: #f9f9f9; }
 
-        .btn-check { background: var(--success); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        .answer { display: none; background: #e8f5e9; padding: 15px; border-radius: 5px; margin-top: 10px; border-left: 5px solid var(--success); }
-
-        .important { color: #c0392b; font-weight: bold; }
+        .note {
+            font-style: italic;
+            color: #616161;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Plateforme de Haute Étude Statistique</h1>
-    <p>Théorie complète, Formules décortiquées & Examens intensifs</p>
-</header>
-
-<div class="container">
-    <nav id="sidebar">
-        <div onclick="showTab('intro')" class="active">0. Introduction & Objectifs</div>
-        <div onclick="showTab('desc')">1. Statistiques Descriptives</div>
-        <div onclick="showTab('va')">2. V.A. & Loi Normale</div>
-        <div onclick="showTab('estim')">3. Estimation & IC</div>
-        <div onclick="showTab('tests')">4. Logique des Tests</div>
-        <div onclick="showTab('cata')">5. Catalogue des Tests</div>
-        <div onclick="showTab('lien')">6. Corrélations & Khi-2</div>
-        <div onclick="showTab('exam')">💎 EXAMEN FINAL</div>
+    <nav>
+        <h2>📚 Menu Statistiques</h2>
+        <ul id="menu">
+            <li class="active" onclick="showTab('chap1')">1. Statistique Descriptive</li>
+            <li onclick="showTab('chap2')">2. Covariance & Corrélation</li>
+            <li onclick="showTab('chap3')">3. V.A. & Loi Normale</li>
+            <li onclick="showTab('chap4')">4. Estimation & Intervalles</li>
+            <li onclick="showTab('chap5')">5. Logique des Tests</li>
+            <li onclick="showTab('chap6')">6. Tests sur les Moyennes</li>
+            <li onclick="showTab('chap7')">7. Test du Khi-Deux (χ²)</li>
+            <li onclick="showTab('final')">💎 EXAMEN FINAL</li>
+        </ul>
     </nav>
 
-    <main id="content">
-        <div id="intro" class="section active">
-            <h2>0. Introduction à la Statistique Inférentielle</h2>
-            <p>L'objectif central (vu dans le <i>Chapitre II</i>) est de passer de l'observation d'un <b>échantillon</b> à une conclusion sur la <b>population-mère</b>.</p>
-            <div class="case-study">
-                <strong>Exemple Fil Rouge :</strong> Pourquoi tester ? Les statistiques obtenues sur un échantillon (ex: écart de salaire hommes/femmes) peuvent être dues au simple hasard de l'échantillonnage. Le test permet de rejeter cette hypothèse du hasard.
+    <main>
+        <div id="chap1" class="section active">
+            <h1>1. Fondements de la Statistique Descriptive</h1>
+            <p>La statistique descriptive permet de résumer l'information contenue dans une série de données via des paramètres de position et de dispersion.</p>
+
+            <h2>A. Paramètres de Position</h2>
+            <p><strong>La Moyenne Arithmétique ($\bar{x}$) :</strong> C'est la valeur centrale théorique.</p>
+            <div class="formula-card">
+                $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
             </div>
-            <h3>Les deux types d'inférence :</h3>
-            <ul>
-                <li><strong>L'Estimation :</strong> Donner une valeur (ponctuelle) ou une fourchette (intervalle) à un paramètre inconnu (moyenne $m$, proportion $p$).</li>
-                <li><strong>Les Tests :</strong> Prendre une décision sur une affirmation concernant ces paramètres.</li>
-            </ul>
+
+            <h2>B. Paramètres de Dispersion</h2>
+            <p><strong>La Variance ($s^2$) :</strong> Moyenne du carré des écarts à la moyenne.</p>
+            <div class="formula-card">
+                $$s^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2$$
+            </div>
+
+            <p><strong>L'Écart-type ($s$) :</strong> C'est la racine carrée de la variance. Il s'exprime dans la même unité que la variable.</p>
+            <div class="formula-card">
+                $$s = \sqrt{s^2}$$
+            </div>
+
+            <p><strong>La Variance Corrigée ($s'^2$) :</strong> Utilisée pour l'inférence (estimation de la population).</p>
+            <div class="formula-card">
+                $$s'^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2 = \frac{n}{n-1} \cdot s^2$$
+            </div>
+
+            <div class="exercise-box">
+                <h3>✍️ Exercice 1.1</h3>
+                <p>Soit la série suivante (notes) : 10, 12, 14, 16. <br>
+                Calculez la moyenne, la variance et la variance corrigée.</p>
+                <button class="btn-show" onclick="toggleAnswer('ans1')">Vérifier la réponse</button>
+                <div id="ans1" class="answer">
+                    1. Moyenne : $(10+12+14+16)/4 = 13$ <br>
+                    2. Variance : $[(10-13)^2 + (12-13)^2 + (14-13)^2 + (16-13)^2]/4 = (9+1+1+9)/4 = 5$ <br>
+                    3. Variance Corrigée : $5 \cdot (4/3) = 6.67$
+                </div>
+            </div>
         </div>
 
-        <div id="desc" class="section">
-            <h2>1. Statistiques Descriptives : Le Détail</h2>
-            <h3>A. Moyennes Spécialisées</h3>
-            <p>On ne se contente pas de la moyenne arithmétique. Selon le type de données :</p>
-            <div class="formula-block">
-                <strong>Moyenne Géométrique ($G$) :</strong> Indispensable pour les taux de croissance.<br>
-                $G = \sqrt[n]{x_1 \times x_2 \times ... \times x_n}$ <br>
-                <em>Usage :</em> Évolution des prix, intérêts composés.
-            </div>
-            <div class="formula-block">
-                <strong>Moyenne Harmonique ($H$) :</strong> Pour les rapports de grandeurs.<br>
-                $H = \frac{n}{\sum \frac{1}{x_i}}$ <br>
-                <em>Usage :</em> Vitesse moyenne sur des distances égales.
+        <div id="chap2" class="section">
+            <h1>2. Liaisons entre variables : Covariance & Corrélation</h1>
+            <p>L'objectif est d'étudier si deux variables quantitatives évoluent ensemble.</p>
+
+            <h2>A. La Covariance</h2>
+            <p>Elle mesure le sens de la liaison.</p>
+            <div class="formula-card">
+                $$Cov(X,Y) = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})$$
             </div>
 
-            <h3>B. Dispersion et Correction</h3>
-            <p>La variance d'un échantillon sous-estime souvent celle de la population. On utilise donc la <b>Variance Corrigée</b>.</p>
-            <div class="formula-block">
-                <strong>Variance Corrigée ($s'^2$) :</strong> <br>
-                $s'^2 = \frac{\sum (x_i - \bar{x})^2}{n-1} = \frac{n}{n-1} \times s^2$ <br>
-                <span class="important">Pourquoi ?</span> Diviser par $n-1$ rend l'estimateur "sans biais".
+            <h2>B. Le Coefficient de Corrélation de Pearson ($r$)</h2>
+            <p>Il mesure l'intensité de la liaison linéaire (entre -1 et 1).</p>
+            <div class="formula-card">
+                $$r = \frac{Cov(X,Y)}{s_x \cdot s_y}$$
             </div>
+            <ul>
+                <li><strong>r = 1 :</strong> Corrélation positive parfaite.</li>
+                <li><strong>r = -1 :</strong> Corrélation négative parfaite.</li>
+                <li><strong>r = 0 :</strong> Aucune liaison linéaire.</li>
+            </ul>
+
+            <div class="exercise-box">
+                <h3>✍️ Exercice 2.1 (Pétanque)</h3>
+                <p>Taille (m) : 1.70, 1.80, 1.90 <br> Poids (kg) : 70, 80, 90 <br>
+                Calculez r. Est-ce une liaison forte ?</p>
+                <button class="btn-show" onclick="toggleAnswer('ans2')">Vérifier la réponse</button>
+                <div id="ans2" class="answer">
+                    Ici, chaque augmentation de 0.10m correspond à 10kg. La liaison est parfaitement linéaire et positive. <br>
+                    <strong>r = 1</strong>. C'est une liaison maximale.
+                </div>
+            </div>
+        </div>
+
+        <div id="chap3" class="section">
+            <h1>3. Variables Aléatoires & Loi Normale</h1>
+            <p>Passage de la statistique descriptive à la théorie probabiliste.</p>
+
+            <h2>A. Espérance et Variance théorique</h2>
+            <div class="formula-card">
+                $$E(X) = \mu \quad \text{et} \quad V(X) = \sigma^2$$
+            </div>
+
+            <h2>B. La Loi Normale $N(\mu, \sigma)$</h2>
+            <p>La "Courbe en Cloche". Propriété de centrage et réduction :</p>
+            <div class="formula-card">
+                $$Z = \frac{X - \mu}{\sigma} \sim N(0,1)$$
+            </div>
+
+            <div class="hypothesis-box">
+                <strong>Théorème Central Limite (TCL) :</strong> <br>
+                Si $n \ge 30$, la distribution de la moyenne d'échantillon $\bar{X}$ tend vers une loi normale :
+                $$\bar{X} \sim N\left(\mu, \frac{\sigma}{\sqrt{n}}\right)$$
+            </div>
+        </div>
+
+        <div id="chap4" class="section">
+            <h1>4. Théorie de l'Estimation & Intervalles de Confiance</h1>
             
+            <h2>A. Intervalle de Confiance (IC) de la moyenne</h2>
+            <p>On cherche à encadrer la vraie moyenne $\mu$ de la population avec un niveau de confiance $1-\alpha$ (souvent 95%).</p>
 
-[Image of variance and standard deviation distribution]
-
-        </div>
-
-        <div id="va" class="section">
-            <h2>2. Variables Aléatoires & Loi Normale</h2>
-            <h3>A. Variable Aléatoire (V.A.)</h3>
-            <p>Une V.A. est une fonction qui transforme un résultat aléatoire en nombre. Elle possède :</p>
-            <ul>
-                <li>Une <strong>Espérance $E(X)$</strong> (centre de gravité).</li>
-                <li>Une <strong>Variance $V(X)$</strong> (dispersion théorique).</li>
-            </ul>
-
-            <h3>B. La Loi Normale $N(m, \sigma)$</h3>
-            <p>La "cloche" de Gauss. La quasi-totalité de l'inférence repose sur le <b>Théorème Central Limite (TCL)</b>.</p>
-            <div class="formula-block">
-                <strong>Centrage et Réduction :</strong> <br>
-                Si $X \sim N(m, \sigma)$, alors $T = \frac{X - m}{\sigma} \sim N(0, 1)$ <br>
-                Cela permet de lire les probabilités dans la <i>Table de la Loi Normale</i>.
+            <div class="condition-badge">Condition : n ≥ 30</div>
+            <div class="formula-card">
+                $$IC_{1-\alpha}(\mu) = \left[ \bar{x} - z_{\alpha/2} \frac{s'}{\sqrt{n}} \ ; \ \bar{x} + z_{\alpha/2} \frac{s'}{\sqrt{n}} \right]$$
             </div>
-            <div class="case-study">
-                <strong>Théorème Central Limite :</strong> Peu importe la loi d'origine de $X$, la moyenne $\bar{X}$ d'un échantillon de taille $n \ge 30$ suivra toujours approximativement une loi normale.
+            <p>Pour 95%, $z_{\alpha/2} = 1.96$.</p>
+
+            <h2>B. Taille d'échantillon nécessaire</h2>
+            <p>Si on veut une précision (marge d'erreur) de $\epsilon$ :</p>
+            <div class="formula-card">
+                $$n \ge \left( \frac{z_{\alpha/2} \cdot \sigma}{\epsilon} \right)^2$$
             </div>
-            
 
-[Image of normal distribution curve with standard deviations]
-
+            <div class="exercise-box">
+                <h3>✍️ Exercice 4.1</h3>
+                <p>Moyenne échantillon = 100, $s' = 10$, $n=100$. Donnez l'IC à 95%.</p>
+                <button class="btn-show" onclick="toggleAnswer('ans4')">Vérifier la réponse</button>
+                <div id="ans4" class="answer">
+                    Erreur type = $10 / \sqrt{100} = 1$. <br>
+                    Marge d'erreur = $1.96 \cdot 1 = 1.96$. <br>
+                    <strong>IC = [98.04 ; 101.96]</strong>.
+                </div>
+            </div>
         </div>
 
-        <div id="estim" class="section">
-            <h2>3. Théorie de l'Estimation & IC</h2>
-            <h3>A. Qualités d'un estimateur</h3>
-            <ul>
-                <li><strong>Sans biais :</strong> Son espérance est égale au paramètre visé.</li>
-                <li><strong>Convergent :</strong> Sa précision augmente avec la taille de l'échantillon $n$.</li>
-            </ul>
+        <div id="chap5" class="section">
+            <h1>5. La Logique des Tests d'Hypothèses</h1>
+            <p>Un test est une procédure pour décider entre deux affirmations.</p>
 
-            <h3>B. Décortiquage de l'Intervalle de Confiance (IC)</h3>
-            <p>On veut encadrer $m$ avec un risque $\alpha$ (souvent 5%).</p>
-            <div class="condition-tag">CAS 1 : $\sigma$ connu (Loi Normale)</div>
-            <div class="formula-block">$IC = [\bar{x} - 1.96 \frac{\sigma}{\sqrt{n}} \space ; \space \bar{x} + 1.96 \frac{\sigma}{\sqrt{n}}]$</div>
+            <div class="hypothesis-box">
+                <strong>Hypothèse Nulle ($H_0$) :</strong> Hypothèse de statu quo (pas d'effet, égalité). <br>
+                <strong>Hypothèse Alternative ($H_1$) :</strong> Ce qu'on veut démontrer (existence d'une différence).
+            </div>
 
-            <div class="condition-tag">CAS 2 : $\sigma$ inconnu et $n < 30$ (Loi de Student)</div>
-            <p>On doit utiliser la table de Student avec $ddl = n-1$.</p>
-            <div class="formula-block">$IC = [\bar{x} - t_{\alpha} \frac{s'}{\sqrt{n}} \space ; \space \bar{x} + t_{\alpha} \frac{s'}{\sqrt{n}}]$</div>
-        </div>
-
-        <div id="tests" class="section">
-            <h2>4. La Logique Profonde des Tests</h2>
-            <h3>Le mécanisme de décision</h3>
-            <ol>
-                <li>Fixer $H_0$ (ex: "Il n'y a pas d'écart de salaire entre sexes").</li>
-                <li>Fixer $H_1$ (ex: "Les hommes gagnent plus que les femmes").</li>
-                <li>Calculer la <strong>Statistique de Test</strong>.</li>
-                <li>Comparer à la <strong>Valeur Critique</strong> ou regarder la <strong>P-valeur</strong>.</li>
-            </ol>
-
-            <h3>Le Tableau des Risques (Crucial)</h3>
+            <h2>Les Risques de décision</h2>
             <table>
                 <tr>
-                    <th>Réalité / Décision</th>
-                    <th>Accepter $H_0$</th>
-                    <th>Rejeter $H_0$</th>
+                    <th>Décision \ Réalité</th>
+                    <th>H0 Vraie</th>
+                    <th>H0 Fausse</th>
                 </tr>
                 <tr>
-                    <td><strong>$H_0$ est Vraie</strong></td>
+                    <td><strong>Rejeter H0</strong></td>
+                    <td style="color:red">Risque α (Type I)</td>
+                    <td style="color:green">Puissance (1-β)</td>
+                </tr>
+                <tr>
+                    <td><strong>Accepter H0</strong></td>
                     <td style="color:green">Décision Correcte</td>
-                    <td style="color:red">Risque $\alpha$ (Type I)</td>
-                </tr>
-                <tr>
-                    <td><strong>$H_0$ est Fausse</strong></td>
-                    <td style="color:red">Risque $\beta$ (Type II)</td>
-                    <td style="color:green">Puissance ($1-\beta$)</td>
+                    <td style="color:red">Risque β (Type II)</td>
                 </tr>
             </table>
-            
+
+            <p><strong>P-valeur (p-value) :</strong> C'est la probabilité d'obtenir le résultat observé si $H_0$ est vraie. <br>
+            <span class="important">Règle d'or :</span> Si $p \le 0.05 \rightarrow$ Rejet de $H_0$.</p>
         </div>
 
-        <div id="cata" class="section">
-            <h2>5. Catalogue Exhaustif des Tests</h2>
+        <div id="chap6" class="section">
+            <h1>6. Catalogue : Tests de comparaison de moyennes</h1>
+
+            <h2>A. Comparaison d'une moyenne à une norme</h2>
+            <div class="hypothesis-box">
+                $H_0 : \mu = \mu_0$ <br> $H_1 : \mu \neq \mu_0$
+            </div>
+            <div class="formula-card">
+                $$Z_{obs} = \frac{\bar{x} - \mu_0}{s' / \sqrt{n}}$$
+            </div>
+
+            <h2>B. Comparaison de deux moyennes (Indépendantes)</h2>
+            <div class="hypothesis-box">
+                $H_0 : \mu_1 = \mu_2$ <br> $H_1 : \mu_1 \neq \mu_2$
+            </div>
             
-            <h3>1. Test d'égalité des moyennes (Student)</h3>
-            <p>On compare deux groupes (Hommes/Femmes). </p>
-            <div class="formula-block">
-                <strong>Test de Student Classique :</strong> Suppose que les variances sont égales.<br>
-                $T = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{S^2_{pool} (\frac{1}{n_1} + \frac{1}{n_2})}}$
-            </div>
-            <div class="formula-block">
-                <strong>Test de Welch :</strong> <span class="important">À privilégier</span> si les variances sont inégales. R adapte les degrés de liberté automatiquement.
+            <p><strong>Test de Student (Variances égales) :</strong></p>
+            <div class="formula-card">
+                $$T = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{s_{pool}^2 (\frac{1}{n_1} + \frac{1}{n_2})}}$$
             </div>
 
-            <h3>2. Test d'égalité des variances (Fisher)</h3>
-            <p>Indispensable avant de choisir entre Student et Welch.</p>
-            <div class="formula-block">
-                $F = \frac{s'^2_1}{s'^2_2}$ <br>
-                Si $F$ est proche de 1, les variances sont homogènes.
-            </div>
+            <p><strong>Test de Welch (Variances inégales) :</strong> <br>
+            Utilisé par défaut dans R car il est plus robuste.</p>
 
-            <h3>3. Test de Normalité (Kolmogorov-Smirnov)</h3>
-            <p>Vérifie si les données suivent une loi normale.</p>
-            <ul>
-                <li>Si $p < 0.05$ : On rejette la normalité $\rightarrow$ On doit utiliser des <strong>tests non-paramétriques</strong> (Wilcoxon).</li>
-            </ul>
+            <div class="exercise-box">
+                <h3>✍️ Exercice 6.1 (Salaires)</h3>
+                <p>H : 2500€, F : 2300€. p-value du t.test = 0.02. Concluez.</p>
+                <button class="btn-show" onclick="toggleAnswer('ans6')">Vérifier la réponse</button>
+                <div id="ans6" class="answer">
+                    Puisque $0.02 \le 0.05$, on rejette $H_0$. <br>
+                    <strong>L'écart de salaire est statistiquement significatif.</strong>
+                </div>
+            </div>
         </div>
 
-        <div id="lien" class="section">
-            <h2>6. Corrélation & Indépendance</h2>
-            
-            <h3>A. Le Coefficient de Pearson ($r$)</h3>
-            <p>Mesure la force du lien entre deux variables quantitatives (ex: Taille et Poids).</p>
-            <div class="formula-block">
-                $r = \frac{Cov(X,Y)}{\sigma_X \sigma_Y}$ <br>
-                $r$ proche de 1 : Lien positif fort.<br>
-                $r$ proche de 0 : Aucun lien linéaire.
+        <div id="chap7" class="section">
+            <h1>7. Test d'Indépendance du Khi-Deux (χ²)</h1>
+            <p>Utilisé pour tester le lien entre deux variables qualitatives.</p>
+
+            <div class="hypothesis-box">
+                $H_0 :$ Les deux variables sont indépendantes. <br>
+                $H_1 :$ Il existe un lien (dépendance) entre les variables.
             </div>
 
-            <h3>B. Le Test du $\chi^2$ (Khi-deux)</h3>
-            <p>Pour deux variables qualitatives (ex: Sexe et Type d'emploi).</p>
-            <div class="formula-block">
-                $\chi^2 = \sum \frac{(n_{ij} - n_{ij}^*)^2}{n_{ij}^*}$ <br>
-                Où $n_{ij}^* = \frac{\text{Total Ligne} \times \text{Total Col}}{\text{Total Général}}$
+            <h2>Formules du χ²</h2>
+            <p><strong>Effectifs Théoriques ($n_{ij}^*$) :</strong></p>
+            <div class="formula-card">
+                $$n_{ij}^* = \frac{\text{Total Ligne} \times \text{Total Colonne}}{\text{Total Général}}$$
             </div>
-            
+
+            <p><strong>Statistique de test :</strong></p>
+            <div class="formula-card">
+                $$\chi^2 = \sum \frac{(n_{obs} - n_{th})^2}{n_{th}}$$
+            </div>
+
+            <p><strong>Degrés de liberté (ddl) :</strong> $(L-1)(C-1)$</p>
         </div>
 
-        <div id="exam" class="section">
-            <h2>💎 Examen Final Interactif</h2>
-            
-            <div class="case-study">
-                <h3>Étude de cas 1 : L'Enquête Emploi</h3>
-                <p>On observe un salaire moyen de 2500€ sur 100 hommes ($s'=400$) et 2300€ sur 100 femmes ($s'=350$).</p>
-                <p><strong>Question 1 :</strong> Quel est le premier test à réaliser avant de comparer les moyennes ?</p>
-                <button class="btn-check" onclick="toggleAnswer('a1')">Vérifier</button>
-                <div id="a1" class="answer">Un <strong>Test de Fisher (F-test)</strong> pour vérifier l'égalité des variances entre hommes et femmes.</div>
-                
-                <p><strong>Question 2 :</strong> Si le test de normalité est rejeté (p=0.002), quel test de comparaison de moyennes utiliser ?</p>
-                <button class="btn-check" onclick="toggleAnswer('a2')">Vérifier</button>
-                <div id="a2" class="answer">Le test non-paramétrique de <strong>Wilcoxon-Mann-Whitney</strong>.</div>
+        <div id="final" class="section">
+            <h1>💎 EXAMEN FINAL DE SYNTHÈSE</h1>
+            <p><i>Cet examen simule une épreuve réelle basée sur tes supports de cours.</i></p>
+
+            <div class="exercise-box">
+                <h3>Partie 1 : Corrélation (Pétanque)</h3>
+                <p>On étudie la corrélation entre la Taille ($X$) et le Poids ($Y$) de 10 joueurs. On trouve $r = 0.95$. <br>
+                1. Quelle est la nature de la liaison ? <br>
+                2. On effectue le test de significativité de r. $H_0 : r=0$. On trouve $p = 0.0001$. Concluez.</p>
+                <button class="btn-show" onclick="toggleAnswer('ex1')">Voir le corrigé</button>
+                <div id="ex1" class="answer">
+                    1. Liaison positive très forte (proche de 1). <br>
+                    2. $p < 0.05 \rightarrow$ Rejet de $H_0$. La corrélation est statistiquement significative.
+                </div>
             </div>
 
-            <div class="case-study">
-                <h3>Étude de cas 2 : Accidents de la route</h3>
-                <p>Tableau de contingence entre Âge et Accidents. Vous trouvez un $\chi^2_{calculé} = 15.6$ et le $\chi^2_{table}$ (seuil) est de 9.49.</p>
-                <p><strong>Question 3 :</strong> Que concluez-vous au seuil de 5% ?</p>
-                <button class="btn-check" onclick="toggleAnswer('a3')">Vérifier</button>
-                <div id="a3" class="answer">Puisque $15.6 > 9.49$, on <strong>rejette $H_0$</strong>. L'âge a donc une influence significative sur le nombre d'accidents.</div>
+            <div class="exercise-box">
+                <h3>Partie 2 : Test du Khi-2 (Accidents)</h3>
+                <p>On veut savoir si le nombre d'accidents (0, 1, 2+) dépend de l'âge (Jeune, Senior). <br>
+                $\chi^2_{obs} = 12.5$. Pour $ddl=2$ au seuil 5%, la table donne $\chi^2_{seuil} = 5.99$. <br>
+                Concluez sur l'indépendance.</p>
+                <button class="btn-show" onclick="toggleAnswer('ex2')">Voir le corrigé</button>
+                <div id="ex2" class="answer">
+                    Puisque $\chi^2_{obs} (12.5) > \chi^2_{seuil} (5.99)$, on rejette l'hypothèse d'indépendance. <br>
+                    <strong>L'âge influence significativement le nombre d'accidents.</strong>
+                </div>
             </div>
 
-            <div class="case-study">
-                <h3>Étude de cas 3 : Corrélation</h3>
-                <p>Un chercheur trouve un coefficient de Pearson $r = 0.85$ entre l'ancienneté et le salaire. Cependant, la p-valeur du test de significativité est $0.12$.</p>
-                <p><strong>Question 4 :</strong> Le lien est-il statistiquement significatif ?</p>
-                <button class="btn-check" onclick="toggleAnswer('a4')">Vérifier</button>
-                <div id="a4" class="answer"><strong>Non.</strong> Bien que $r$ soit élevé (0.85), la p-valeur (0.12) est supérieure à 0.05. On ne peut pas rejeter l'absence de lien dans la population. C'est probablement dû à un échantillon trop petit.</div>
+            <div class="exercise-box">
+                <h3>Partie 3 : Estimation (Enquête Emploi)</h3>
+                <p>Sur 400 femmes, le salaire moyen est de 2100€ avec un écart-type corrigé de 200€. <br>
+                Construisez l'IC à 95% de la moyenne.</p>
+                <button class="btn-show" onclick="toggleAnswer('ex3')">Voir le corrigé</button>
+                <div id="ex3" class="answer">
+                    Erreur type = $200 / \sqrt{400} = 200 / 20 = 10$. <br>
+                    Marge d'erreur = $1.96 \cdot 10 = 19.6$. <br>
+                    <strong>IC = [2080.4€ ; 2119.6€]</strong>.
+                </div>
             </div>
         </div>
     </main>
-</div>
 
-<script>
-    function showTab(id) {
-        // Cacher toutes les sections
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        // Désactiver tous les menus
-        document.querySelectorAll('#sidebar div').forEach(d => d.classList.remove('active'));
-        
-        // Afficher la bonne section
-        document.getElementById(id).classList.add('active');
-        // Activer le bon menu
-        event.currentTarget.classList.add('active');
-        
-        window.scrollTo(0,0);
-    }
+    <script>
+        function showTab(tabId) {
+            // Masquer toutes les sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
 
-    function toggleAnswer(id) {
-        let div = document.getElementById(id);
-        div.style.display = (div.style.display === 'block') ? 'none' : 'block';
-    }
-</script>
+            // Désactiver tous les items du menu
+            const items = document.querySelectorAll('#menu li');
+            items.forEach(i => i.classList.remove('active'));
 
+            // Afficher la section demandée
+            document.getElementById(tabId).classList.add('active');
+
+            // Mettre en gras l'item du menu (via event target ou recherche)
+            const activeItem = Array.from(items).find(i => i.getAttribute('onclick').includes(tabId));
+            if (activeItem) activeItem.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
+            } else {
+                el.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
