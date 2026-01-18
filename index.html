@@ -3,45 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Statistique Inférentielle - Cours Complet</title>
+    <title>Master Stats : Le Manuel Interactif Ultime</title>
+
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
         :root {
-            --primary: #1a237e;
-            --secondary: #303f9f;
-            --accent: #ff6d00;
-            --bg: #f5f5f5;
-            --white: #ffffff;
-            --text: #212121;
-            --success: #2e7d32;
+            --primary: #00235b;
+            --secondary: #005086;
+            --accent: #ff8c00;
+            --bg-light: #f4f7f9;
+            --formula-bg: #ffffff;
+            --exercise-bg: #e8f5e9;
+            --hypothesis-bg: #fff9c4;
+            --border-color: #d1d9e6;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Georgia', serif; /* Plus lisible pour les textes longs */
+            background-color: var(--bg-light);
+            color: #2c3e50;
             margin: 0;
             display: flex;
             min-height: 100vh;
         }
 
-        /* Sidebar Navigation */
+        /* --- Navigation Latérale --- */
         nav {
-            width: 300px;
+            width: 320px;
             background-color: var(--primary);
             color: white;
             position: fixed;
             height: 100vh;
             overflow-y: auto;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+            z-index: 100;
         }
 
         nav h2 {
-            padding: 20px;
-            font-size: 1.2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 25px;
+            font-size: 1.4rem;
             text-align: center;
+            border-bottom: 2px solid var(--accent);
+            margin: 0;
+            background: rgba(0,0,0,0.1);
         }
 
         nav ul {
@@ -51,34 +57,38 @@
         }
 
         nav ul li {
-            padding: 15px 25px;
+            padding: 18px 25px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
             cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.95rem;
+            transition: all 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 1rem;
         }
 
         nav ul li:hover {
             background-color: var(--secondary);
             padding-left: 35px;
+            color: var(--accent);
         }
 
         nav ul li.active {
             background-color: var(--accent);
+            color: white;
             font-weight: bold;
         }
 
-        /* Main Content Area */
+        /* --- Contenu Principal --- */
         main {
-            margin-left: 300px;
-            padding: 40px;
+            margin-left: 320px;
+            padding: 50px;
             width: 100%;
-            max-width: 1100px;
+            max-width: 1200px;
+            box-sizing: border-box;
         }
 
         .section {
             display: none;
-            animation: fadeIn 0.4s ease-in-out;
+            animation: fadeIn 0.6s ease;
         }
 
         .section.active {
@@ -86,546 +96,463 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Typography & Components */
-        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
-        h2 { color: var(--secondary); margin-top: 30px; }
-        p { line-height: 1.6; font-size: 1.05rem; }
+        /* --- Design des Composants --- */
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            border-left: 10px solid var(--accent);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
 
-        .formula-card {
+        h2 {
+            color: var(--secondary);
+            font-size: 1.8rem;
+            margin-top: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        h3 { color: #555; font-style: italic; margin-top: 30px; }
+
+        .important-text {
             background: #fff;
-            border-left: 6px solid var(--primary);
             padding: 20px;
-            margin: 20px 0;
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            font-size: 1.2rem;
-            text-align: center;
-        }
-
-        .hypothesis-box {
-            background: #e3f2fd;
-            border: 1px solid #90caf9;
-            padding: 15px;
             border-radius: 8px;
-            margin: 15px 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
         }
 
-        .condition-badge {
-            background: #f44336;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-
-        .exercise-box {
-            background: #f1f8e9;
-            border: 1px dashed var(--success);
-            padding: 20px;
+        /* --- BLOCS FORMULES --- */
+        .formula-container {
+            background: var(--formula-bg);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 30px;
             margin: 30px 0;
-            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .formula-container:hover { transform: scale(1.02); }
+        .formula-label {
+            font-weight: bold;
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
         }
 
-        .btn-show {
-            background: var(--secondary);
+        /* --- BLOCS HYPOTHÈSES --- */
+        .hypothesis-box {
+            background: var(--hypothesis-bg);
+            border-left: 8px solid #fbc02d;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* --- BLOCS EXERCICES --- */
+        .exercise-wrapper {
+            background: var(--exercise-bg);
+            border: 2px dashed #2e7d32;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .exercise-header {
+            font-weight: bold;
+            color: #1b5e20;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-solution {
+            background: #2e7d32;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            border-radius: 30px;
             cursor: pointer;
-            margin-top: 10px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        .btn-solution:hover { background: #1b5e20; transform: translateY(-2px); }
+
+        .solution-content {
+            display: none;
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #2e7d32;
+            animation: slideDown 0.4s ease;
         }
 
-        .answer {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            background: #fff;
-            border-left: 4px solid var(--success);
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 2000px; }
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
             background: white;
+            margin: 25px 0;
         }
-
         th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
+            border: 1px solid #cfd8dc;
+            padding: 15px;
             text-align: center;
         }
-
         th { background: var(--primary); color: white; }
 
-        .note {
-            font-style: italic;
-            color: #616161;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-            margin-top: 10px;
+        .tag-condition {
+            background: #d32f2f;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <h2>📚 Menu Statistiques</h2>
+        <h2>🎓 Statistique 2026</h2>
         <ul id="menu">
-            <li class="active" onclick="showTab('chap1')">1. Statistique Descriptive</li>
-            <li onclick="showTab('chap2')">2. Covariance & Corrélation</li>
-            <li onclick="showTab('chap3')">3. V.A. & Loi Normale</li>
-            <li onclick="showTab('chap4')">4. Estimation & Intervalles</li>
-            <li onclick="showTab('chap5')">5. Logique des Tests</li>
-            <li onclick="showTab('chap6')">6. Tests sur les Moyennes</li>
-            <li onclick="showTab('chap7')">7. Test du Khi-Deux (χ²)</li>
-            <li onclick="showTab('final')">💎 EXAMEN FINAL</li>
+            <li class="active" onclick="showSection('desc')">1. Statistique Descriptive</li>
+            <li onclick="showSection('mediane')">2. Calcul de la Médiane</li>
+            <li onclick="showSection('liens')">3. Covariance & Corrélation</li>
+            <li onclick="showSection('loi-normale')">4. La Loi Normale</li>
+            <li onclick="showSection('estim')">5. Estimation & IC</li>
+            <li onclick="showSection('tests-logique')">6. Logique des Tests</li>
+            <li onclick="showSection('catalogue')">7. Catalogue des Tests</li>
+            <li onclick="showSection('exam')">⭐ EXAMEN FINAL</li>
         </ul>
     </nav>
 
     <main>
-        <div id="chap1" class="section active">
-            <h1>1. La Médiane : Théorie & Interpolation</h1>
-            <p>La médiane ($Me$) est la valeur qui partage une série statistique ordonnée en deux groupes d'effectifs égaux (50% au-dessus, 50% en dessous).</p>
+        <div id="desc" class="section active">
+            <h1>1. Fondements de la Statistique Descriptive</h1>
+            <p class="important-text">La statistique descriptive est l'art de résumer l'information. On cherche à savoir où se trouve le centre des données et comment elles sont étalées.</p>
 
-            <div class="card" style="border-left: 6px solid #f1c40f; padding: 15px; background: #fffde7; margin-bottom: 20px;">
-                <strong>⚠️ Attention :</strong> Avant tout calcul de médiane, il faut impérativement <strong>trier les données</strong> par ordre croissant.
-            </div>
-
-            <h2>A. Cas d'une série de données brutes</h2>
-            <p>On distingue deux cas selon la taille de l'échantillon ($n$) :</p>
-            <ul>
-                <li><strong>Si $n$ est impair :</strong> La médiane est la valeur centrale située à la position $\frac{n+1}{2}$.</li>
-                <li><strong>Si $n$ est pair :</strong> La médiane est la moyenne des deux valeurs centrales situées aux positions $\frac{n}{2}$ et $\frac{n}{2} + 1$.</li>
-            </ul>
-
-            <div class="exercise-box">
-                <h3>✍️ Mini-Exercice 1 : Série discrète</h3>
-                <p>Soit la série de notes : 12, 15, 8, 19, 11, 14. Calculez la médiane.</p>
-                <button class="btn-show" onclick="toggleAnswer('ans_med1')">Voir la méthode</button>
-                <div id="ans_med1" class="answer">
-                    1. On trie : 8, 11, 12, 14, 15, 19. <br>
-                    2. $n = 6$ (pair). <br>
-                    3. Positions centrales : $6/2 = 3$-ème et $4$-ème valeurs. <br>
-                    4. Valeurs : 12 et 14. <br>
-                    5. $Me = (12+14)/2 = \mathbf{13}$.
-                </div>
-            </div>
-
-            <h2>B. Cas des données regroupées en classes (Interpolation)</h2>
-            <p>C'est le cas le plus fréquent dans vos cours. On utilise les fréquences cumulées croissantes ($FCC$).</p>
+            <h2>A. Mesures de Tendance Centrale</h2>
             
-            <div class="hypothesis-box">
-                <strong>Étape 1 :</strong> Identifier la <strong>classe médiane</strong>. C'est la classe où la fréquence cumulée atteint ou dépasse 0,5 (50%). <br>
-                <strong>Étape 2 :</strong> Appliquer la formule d'interpolation linéaire :
-            </div>
-
-            <div class="formula-card">
-                $$\frac{Me - x_i}{0.5 - F(x_i)} = \frac{x_{i+1} - x_i}{F(x_{i+1}) - F(x_i)}$$
-            </div>
-
-            <p>Où :</p>
-            <ul>
-                <li>$x_i$ : Borne inférieure de la classe médiane.</li>
-                <li>$x_{i+1}$ : Borne supérieure de la classe médiane.</li>
-                <li>$F(x_i)$ : Fréquence cumulée à la borne inférieure.</li>
-                <li>$F(x_{i+1})$ : Fréquence cumulée à la borne supérieure.</li>
-            </ul>
-
-            <div class="exercise-box" style="border: 2px solid var(--primary);">
-                <h3>🏋️ EXERCICE D'EXAMEN : Données Groupées</h3>
-                <p>On étudie le temps de trajet de 2500 salariés (données du cours du 29 sept) :</p>
-                <table>
-                    <tr>
-                        <th>Classes (min)</th>
-                        <th>Effectifs ($n_i$)</th>
-                        <th>Fréq. Cumulées ($F_i$)</th>
-                    </tr>
-                    <tr><td>[15,5 ; 20,5[</td><td>200</td><td>0,08</td></tr>
-                    <tr><td>[20,5 ; 25,5[</td><td>500</td><td>0,28</td></tr>
-                    <tr style="background: #fff9c4;"><td><strong>[25,5 ; 30,5[</strong></td><td><strong>1000</strong></td><td><strong>0,68</strong></td></tr>
-                    <tr><td>[30,5 ; 35,5[</td><td>600</td><td>0,92</td></tr>
-                    <tr><td>[35,5 ; 40,5[</td><td>200</td><td>1,00</td></tr>
-                </table>
-                <p><strong>Question : Calculez la médiane exacte par interpolation.</strong></p>
-                <button class="btn-show" onclick="toggleAnswer('ans_med_interp')">Vérifier le calcul détaillé</button>
-                <div id="ans_med_interp" class="answer">
-                    <strong>1. Classe médiane :</strong> On cherche 0.5. À 25.5 min, on est à 0.28. À 30.5 min, on est à 0.68. La médiane est donc dans la classe <strong>[25,5 ; 30,5[</strong>. <br><br>
-                    <strong>2. Application de la formule :</strong> <br>
-                    $x_i = 25.5$ | $x_{i+1} = 30.5$ <br>
-                    $F(x_i) = 0.28$ | $F(x_{i+1}) = 0.68$ <br><br>
-                    $\frac{Me - 25.5}{0.5 - 0.28} = \frac{30.5 - 25.5}{0.68 - 0.28}$ <br><br>
-                    $\frac{Me - 25.5}{0.22} = \frac{5}{0.4}$ <br><br>
-                    $Me - 25.5 = 12.5 \times 0.22 = 2.75$ <br>
-                    $Me = 25.5 + 2.75 = \mathbf{28.25 \text{ min}}$
-                </div>
-            </div>
-            <div class="formula-card">
+            <div class="formula-container">
+                <span class="formula-label">Moyenne Arithmétique ($\bar{x}$)</span>
                 $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
+                <p class="note">C'est le "centre de gravité" de la série.</p>
             </div>
 
-            <h2>B. Paramètres de Dispersion</h2>
-            <p><strong>La Variance ($s^2$) :</strong> Moyenne du carré des écarts à la moyenne.</p>
-            <div class="formula-card">
+            <h2>B. Mesures de Dispersion</h2>
+
+            <div class="formula-container">
+                <span class="formula-label">Variance ($s^2$)</span>
                 $$s^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2$$
             </div>
 
-            <p><strong>L'Écart-type ($s$) :</strong> C'est la racine carrée de la variance. Il s'exprime dans la même unité que la variable.</p>
-            <div class="formula-card">
+            <div class="formula-container">
+                <span class="formula-label">Variance Corrigée ($s'^2$) - Très importante pour l'inférence</span>
+                $$s'^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2 = \frac{n}{n-1} \cdot s^2$$
+                <p class="note">On divise par $n-1$ pour corriger le biais d'échantillonnage.</p>
+            </div>
+
+            <div class="formula-container">
+                <span class="formula-label">Écart-type ($s$)</span>
                 $$s = \sqrt{s^2}$$
             </div>
 
-            <p><strong>La Variance Corrigée ($s'^2$) :</strong> Utilisée pour l'inférence (estimation de la population).</p>
-            <div class="formula-card">
-                $$s'^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2 = \frac{n}{n-1} \cdot s^2$$
-            </div>
-
-            <div class="exercise-box">
-                <h3>✍️ Exercice 1.1</h3>
-                <p>Soit la série suivante (notes) : 10, 12, 14, 16. <br>
-                Calculez la moyenne, la variance et la variance corrigée.</p>
-                <button class="btn-show" onclick="toggleAnswer('ans1')">Vérifier la réponse</button>
-                <div id="ans1" class="answer">
-                    1. Moyenne : $(10+12+14+16)/4 = 13$ <br>
-                    2. Variance : $[(10-13)^2 + (12-13)^2 + (14-13)^2 + (16-13)^2]/4 = (9+1+1+9)/4 = 5$ <br>
-                    3. Variance Corrigée : $5 \cdot (4/3) = 6.67$
+            <div class="exercise-wrapper">
+                <div class="exercise-header">📝 Exercice 1.1 : Calcul de base</div>
+                <p>On observe le nombre d'enfants dans 5 familles : 1, 3, 0, 2, 4. <br>
+                Calculez $\bar{x}$, $s^2$ et $s'^2$.</p>
+                <button class="btn-solution" onclick="toggleSolution('sol1-1')">Afficher la solution détaillée</button>
+                <div id="sol1-1" class="solution-content">
+                    <strong>1. Moyenne :</strong> <br>
+                    $\bar{x} = (1+3+0+2+4)/5 = 10/5 = \mathbf{2}$ <br><br>
+                    <strong>2. Variance :</strong> <br>
+                    $s^2 = \frac{(1-2)^2 + (3-2)^2 + (0-2)^2 + (2-2)^2 + (4-2)^2}{5}$ <br>
+                    $s^2 = \frac{1 + 1 + 4 + 0 + 4}{5} = \frac{10}{5} = \mathbf{2}$ <br><br>
+                    <strong>3. Variance Corrigée :</strong> <br>
+                    $s'^2 = \frac{n}{n-1} s^2 = \frac{5}{4} \cdot 2 = \mathbf{2.5}$
                 </div>
             </div>
         </div>
 
-        <div id="chap2" class="section">
-            <h1>2. Liaisons entre variables : Covariance & Corrélation</h1>
-            <p>L'objectif est d'étudier si deux variables quantitatives évoluent ensemble.</p>
+        <div id="mediane" class="section">
+            <h1>2. Calcul de la Médiane (Cas Complexes)</h1>
+            <p>La médiane ($Me$) est la valeur qui sépare l'échantillon en deux parts égales. Son calcul dépend de la structure des données.</p>
+
+            <h2>A. Données Groupées par Classes (Interpolation Linéaire)</h2>
+            <p>C'est la méthode reine de ton cours. Lorsqu'on a des classes (ex: [10; 20[), on ne peut pas donner une valeur exacte sans interpolation.</p>
+
+            <div class="hypothesis-box">
+                <strong>Méthodologie :</strong>
+                <ol>
+                    <li>Calculer les <strong>Fréquences Cumulées Croissantes (FCC)</strong>.</li>
+                    <li>Identifier la <strong>Classe Médiane</strong> (celle où FCC dépasse 0.50).</li>
+                    <li>Appliquer la formule d'interpolation :</li>
+                </ol>
+            </div>
+
+            <div class="formula-container">
+                <span class="formula-label">Formule d'Interpolation Linéaire</span>
+                $$\frac{Me - L_{inf}}{0.5 - F_{inf}} = \frac{L_{sup} - L_{inf}}{F_{sup} - F_{inf}}$$
+                <p style="font-size: 0.9rem; text-align: left; margin-top: 15px;">
+                    $L_{inf}, L_{sup}$ : Bornes de la classe médiane. <br>
+                    $F_{inf}, F_{sup}$ : Fréquences cumulées aux bornes de la classe.
+                </p>
+            </div>
+
+            <div class="exercise-wrapper">
+                <div class="exercise-header">📝 Exercice 2.1 : Temps de trajet (Données du Cours)</div>
+                <p>On étudie le temps de trajet de 2500 salariés :</p>
+                <table>
+                    <tr><th>Temps (min)</th><th>Effectif ($n_i$)</th><th>FCC ($F_i$)</th></tr>
+                    <tr><td>[15.5 ; 20.5[</td><td>200</td><td>0.08</td></tr>
+                    <tr><td>[20.5 ; 25.5[</td><td>500</td><td>0.28</td></tr>
+                    <tr style="background:#fff9c4"><td><strong>[25.5 ; 30.5[</strong></td><td><strong>1000</strong></td><td><strong>0.68</strong></td></tr>
+                    <tr><td>[30.5 ; 35.5[</td><td>600</td><td>0.92</td></tr>
+                </table>
+                <p><strong>Question : Calculez la médiane.</strong></p>
+                <button class="btn-solution" onclick="toggleSolution('sol2-1')">Voir le calcul pas-à-pas</button>
+                <div id="sol2-1" class="solution-content">
+                    1. La classe médiane est <strong>[25.5 ; 30.5[</strong> car FCC passe de 0.28 à 0.68. <br>
+                    2. On pose les valeurs : $L_{inf} = 25.5$, $L_{sup} = 30.5$, $F_{inf} = 0.28$, $F_{sup} = 0.68$. <br><br>
+                    3. Équation : $\frac{Me - 25.5}{0.5 - 0.28} = \frac{30.5 - 25.5}{0.68 - 0.28}$ <br>
+                    4. Simplification : $\frac{Me - 25.5}{0.22} = \frac{5}{0.4} = 12.5$ <br>
+                    5. Résolution : $Me - 25.5 = 12.5 \times 0.22 = 2.75$ <br>
+                    6. Résultat : $Me = 25.5 + 2.75 = \mathbf{28.25 \text{ min}}$
+                </div>
+            </div>
+        </div>
+
+        <div id="liens" class="section">
+            <h1>3. Étude des Liaisons : Covariance & Corrélation</h1>
+            <p>Comment deux variables quantitatives $X$ et $Y$ varient-elles ensemble ?</p>
 
             <h2>A. La Covariance</h2>
-            <p>Elle mesure le sens de la liaison.</p>
-            <div class="formula-card">
+            <div class="formula-container">
+                <span class="formula-label">Covariance ($Cov_{XY}$)</span>
                 $$Cov(X,Y) = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})$$
+                <p class="note">Si > 0 : les variables varient dans le même sens.</p>
             </div>
 
-            <h2>B. Le Coefficient de Corrélation de Pearson ($r$)</h2>
-            <p>Il mesure l'intensité de la liaison linéaire (entre -1 et 1).</p>
-            <div class="formula-card">
+            <h2>B. Le Coefficient de Corrélation de Pearson</h2>
+            <div class="formula-container">
+                <span class="formula-label">Coefficient $r$</span>
                 $$r = \frac{Cov(X,Y)}{s_x \cdot s_y}$$
             </div>
-            <ul>
-                <li><strong>r = 1 :</strong> Corrélation positive parfaite.</li>
-                <li><strong>r = -1 :</strong> Corrélation négative parfaite.</li>
-                <li><strong>r = 0 :</strong> Aucune liaison linéaire.</li>
-            </ul>
-
-            <div class="exercise-box">
-                <h3>✍️ Exercice 2.1 (Pétanque)</h3>
-                <p>Taille (m) : 1.70, 1.80, 1.90 <br> Poids (kg) : 70, 80, 90 <br>
-                Calculez r. Est-ce une liaison forte ?</p>
-                <button class="btn-show" onclick="toggleAnswer('ans2')">Vérifier la réponse</button>
-                <div id="ans2" class="answer">
-                    Ici, chaque augmentation de 0.10m correspond à 10kg. La liaison est parfaitement linéaire et positive. <br>
-                    <strong>r = 1</strong>. C'est une liaison maximale.
-                </div>
-            </div>
-        </div>
-
-        <div id="chap3" class="section">
-            <h1>3. La Loi Normale $N(\mu, \sigma)$ : Maîtriser les Calculs</h1>
-            <p>La loi normale est la distribution la plus utilisée en statistiques car elle modélise les phénomènes naturels où les valeurs se regroupent autour d'une moyenne.</p>
-
-            
-
-            <h2>A. Démonstration : Pourquoi "Centrer" et "Réduire" ?</h2>
-            <p>Calculer une probabilité directement avec la fonction de densité de la loi normale est complexe :
-            $$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2} \left(\frac{x-\mu}{\sigma}\right)^2}$$
-            Pour éviter d'utiliser cette intégrale, on transforme n'importe quelle variable $X$ en une variable <strong>Standard $Z$</strong> qui suit une loi $N(0, 1)$.</p>
-
-            <div class="formula-card">
-                <strong>La formule de transformation :</strong>
-                $$Z = \frac{X - \mu}{\sigma}$$
-            </div>
-            <ul>
-                <li><strong>Centrer :</strong> On soustrait $\mu$ pour que la nouvelle moyenne soit 0.</li>
-                <li><strong>Réduire :</strong> On divise par $\sigma$ pour que le nouvel écart-type soit 1.</li>
-            </ul>
-
-            <hr>
-
-            <h2>B. Cas n°1 : Calculer une probabilité (Trouver $P$)</h2>
-            <p><em>Exemple : "Quelle est la probabilité qu'un individu gagne moins de 2500€ ?"</em></p>
-            <div class="hypothesis-box">
-                <strong>Méthode :</strong>
-                <ol>
-                    <li>On pose la valeur $X = 2500$.</li>
-                    <li>On calcule $Z = \frac{2500 - \mu}{\sigma}$.</li>
-                    <li>On cherche la valeur de $Z$ dans la <strong>Table de la Loi Normale</strong> pour obtenir la probabilité.</li>
-                </ol>
-            </div>
-
-            <div class="exercise-box">
-                <h3>✍️ Exercice 3.1 : Trouver la probabilité</h3>
-                <p>Dans une entreprise, le salaire moyen est $\mu = 2200€$ avec un écart-type $\sigma = 300€$. <br>
-                <strong>Question :</strong> Quel est le pourcentage de salariés gagnant moins de 2500€ ?</p>
-                <button class="btn-show" onclick="toggleAnswer('ans_prob1')">Voir la démonstration</button>
-                <div id="ans_prob1" class="answer">
-                    1. On calcule $Z$ : <br>
-                    $Z = \frac{2500 - 2200}{300} = \frac{300}{300} = \mathbf{1}$ <br><br>
-                    2. On regarde dans la table pour $Z = 1.00$ : <br>
-                    $P(Z \le 1) = 0.8413$ <br><br>
-                    <strong>Réponse :</strong> Environ 84,13% des salariés gagnent moins de 2500€.
-                </div>
-            </div>
-
-            <hr>
-
-            <h2>C. Cas n°2 : Le calcul inverse (Trouver $X$)</h2>
-            <p><em>Exemple : "Quel salaire faut-il pour faire partie des 5% les plus riches ?"</em></p>
-            <div class="hypothesis-box">
-                <strong>Méthode :</strong>
-                <ol>
-                    <li>On connaît la probabilité (ex: 0.95 pour le top 5%).</li>
-                    <li>On cherche dans le <strong>corps de la table</strong> la valeur de $Z$ correspondante.</li>
-                    <li>On utilise la formule inverse pour retrouver $X$ :</li>
-                </ol>
-            </div>
-
-            <div class="formula-card">
-                <strong>Formule pour retrouver X :</strong>
-                $$X = \mu + (Z \cdot \sigma)$$
-            </div>
-
-            <div class="exercise-box" style="border: 2px solid var(--accent);">
-                <h3>🏋️ EXERCICE TYPE EXAMEN : Le calcul inverse</h3>
-                <p>On étudie la taille des joueurs de pétanque (données de ton exercice). <br>
-                La taille moyenne est $\mu = 1.75$m avec $\sigma = 0.08$m. <br>
-                <strong>Question :</strong> Un joueur veut s'inscrire à un tournoi réservé aux 10% des joueurs les plus grands. Quelle taille minimale ($X$) doit-il faire ?</p>
-                <button class="btn-show" onclick="toggleAnswer('ans_inv1')">Vérifier le raisonnement</button>
-                <div id="ans_inv1" class="answer">
-                    1. On cherche les 10% les plus grands, donc la valeur qui laisse <strong>90% (0.90)</strong> derrière elle. <br>
-                    2. Dans la table de la loi normale, la probabilité 0.90 correspond à <strong>$Z \approx 1.28$</strong>. <br>
-                    3. On applique la formule inverse : <br>
-                    $X = \mu + (Z \cdot \sigma)$ <br>
-                    $X = 1.75 + (1.28 \cdot 0.08)$ <br>
-                    $X = 1.75 + 0.1024$ <br>
-                    $X = \mathbf{1.8524 \text{ m}}$ <br><br>
-                    <strong>Conclusion :</strong> Il doit mesurer au moins 1m85.
-                </div>
-            </div>
-
-            <div class="card" style="background: #e1f5fe; padding: 15px;">
-                <h4>💡 Astuces pour l'examen :</h4>
+            <div class="important-text">
+                <strong>Interprétation de $r$ :</strong>
                 <ul>
-                    <li>Si on cherche $P(X > a)$, le résultat est $1 - P(X \le a)$.</li>
-                    <li>Si $Z$ est négatif (valeur sous la moyenne), on utilise la symétrie : $P(Z \le -1.5) = 1 - P(Z \le 1.5)$.</li>
+                    <li>$r = 1$ : Relation linéaire positive parfaite.</li>
+                    <li>$r = -1$ : Relation linéaire négative parfaite.</li>
+                    <li>$r = 0$ : Absence totale de lien linéaire.</li>
                 </ul>
             </div>
-            </div>
 
-            <div class="hypothesis-box">
-                <strong>Théorème Central Limite (TCL) :</strong> <br>
-                Si $n \ge 30$, la distribution de la moyenne d'échantillon $\bar{X}$ tend vers une loi normale :
-                $$\bar{X} \sim N\left(\mu, \frac{\sigma}{\sqrt{n}}\right)$$
-            </div>
-        </div>
-
-        <div id="chap4" class="section">
-            <h1>4. Théorie de l'Estimation & Intervalles de Confiance</h1>
-            
-            <h2>A. Intervalle de Confiance (IC) de la moyenne</h2>
-            <p>On cherche à encadrer la vraie moyenne $\mu$ de la population avec un niveau de confiance $1-\alpha$ (souvent 95%).</p>
-
-            <div class="condition-badge">Condition : n ≥ 30</div>
-            <div class="formula-card">
-                $$IC_{1-\alpha}(\mu) = \left[ \bar{x} - z_{\alpha/2} \frac{s'}{\sqrt{n}} \ ; \ \bar{x} + z_{\alpha/2} \frac{s'}{\sqrt{n}} \right]$$
-            </div>
-            <p>Pour 95%, $z_{\alpha/2} = 1.96$.</p>
-
-            <h2>B. Taille d'échantillon nécessaire</h2>
-            <p>Si on veut une précision (marge d'erreur) de $\epsilon$ :</p>
-            <div class="formula-card">
-                $$n \ge \left( \frac{z_{\alpha/2} \cdot \sigma}{\epsilon} \right)^2$$
-            </div>
-
-            <div class="exercise-box">
-                <h3>✍️ Exercice 4.1</h3>
-                <p>Moyenne échantillon = 100, $s' = 10$, $n=100$. Donnez l'IC à 95%.</p>
-                <button class="btn-show" onclick="toggleAnswer('ans4')">Vérifier la réponse</button>
-                <div id="ans4" class="answer">
-                    Erreur type = $10 / \sqrt{100} = 1$. <br>
-                    Marge d'erreur = $1.96 \cdot 1 = 1.96$. <br>
-                    <strong>IC = [98.04 ; 101.96]</strong>.
+            <div class="exercise-wrapper">
+                <div class="exercise-header">📝 Exercice 3.1 : Joueurs de Pétanque</div>
+                <p>On a 2 joueurs. Joueur 1 : (1.70m, 70kg). Joueur 2 : (1.90m, 90kg). <br>
+                Calculez la covariance et le coefficient $r$.</p>
+                <button class="btn-solution" onclick="toggleSolution('sol3-1')">Afficher le calcul</button>
+                <div id="sol3-1" class="solution-content">
+                    <strong>1. Moyennes :</strong> $\bar{x} = 1.80$, $\bar{y} = 80$. <br>
+                    <strong>2. Covariance :</strong> <br>
+                    $Cov = \frac{(1.7-1.8)(70-80) + (1.9-1.8)(90-80)}{2} = \frac{(-0.1)(-10) + (0.1)(10)}{2} = \frac{1+1}{2} = \mathbf{1}$. <br>
+                    <strong>3. Écarts-types :</strong> $s_x = 0.1$, $s_y = 10$. <br>
+                    <strong>4. Coefficient r :</strong> $r = \frac{1}{0.1 \times 10} = \frac{1}{1} = \mathbf{1}$. <br>
+                    <em>Interprétation : Liaison positive parfaite.</em>
                 </div>
             </div>
         </div>
 
-        <div id="chap5" class="section">
-            <h1>5. La Logique des Tests d'Hypothèses</h1>
-            <p>Un test est une procédure pour décider entre deux affirmations.</p>
+        <div id="loi-normale" class="section">
+            <h1>4. La Loi Normale $N(\mu, \sigma)$</h1>
+            
+            <h2>A. La Démonstration du passage à $N(0, 1)$</h2>
+            <p>Pourquoi fait-on $Z = \frac{X - \mu}{\sigma}$ ? <br>
+            C'est pour <strong>standardiser</strong>. Imaginez que vous voulez comparer des notes sur 20 et des notes sur 100. En soustrayant la moyenne (centrage) et en divisant par l'écart-type (réduction), vous ramenez tout sur une échelle commune où la moyenne est 0 et l'écart-type est 1.</p>
 
-            <div class="hypothesis-box">
-                <strong>Hypothèse Nulle ($H_0$) :</strong> Hypothèse de statu quo (pas d'effet, égalité). <br>
-                <strong>Hypothèse Alternative ($H_1$) :</strong> Ce qu'on veut démontrer (existence d'une différence).
+            <div class="formula-container">
+                <span class="formula-label">Variable Centrée Réduite ($Z$)</span>
+                $$Z = \frac{X - \mu}{\sigma}$$
             </div>
 
-            <h2>Les Risques de décision</h2>
+            <div class="formula-container">
+                <span class="formula-label">Formule Inverse (Trouver $X$)</span>
+                $$X = \mu + Z \cdot \sigma$$
+            </div>
+
+            <div class="exercise-wrapper">
+                <div class="exercise-header">📝 Exercice 4.1 : Calcul de Probabilité (Trouver P)</div>
+                <p>Le salaire moyen est $\mu = 2000€$ avec $\sigma = 400€$. <br>
+                Quelle est la probabilité qu'un salarié gagne moins de 2600€ ?</p>
+                <button class="btn-solution" onclick="toggleSolution('sol4-1')">Solution</button>
+                <div id="sol4-1" class="solution-content">
+                    1. Calcul de $Z$ : $Z = \frac{2600 - 2000}{400} = \frac{600}{400} = \mathbf{1.5}$ <br>
+                    2. Lecture table $N(0,1)$ : $P(Z \le 1.5) = \mathbf{0.9332}$ <br>
+                    <em>Réponse : 93.32% de chances.</em>
+                </div>
+            </div>
+
+            <div class="exercise-wrapper">
+                <div class="exercise-header">📝 Exercice 4.2 : Calcul Inverse (Trouver X)</div>
+                <p>Toujours avec $\mu=2000, \sigma=400$. Quel est le salaire minimum pour faire partie des 2.5% les mieux payés ?</p>
+                <button class="btn-solution" onclick="toggleSolution('sol4-2')">Solution</button>
+                <div id="sol4-2" class="solution-content">
+                    1. Les 2.5% meilleurs correspondent à une probabilité cumulée de <strong>0.9750</strong>. <br>
+                    2. Lecture table inverse : Pour $P = 0.9750$, on trouve <strong>$Z = 1.96$</strong>. <br>
+                    3. Calcul de $X$ : $X = 2000 + (1.96 \cdot 400) = 2000 + 784 = \mathbf{2784€}$.
+                </div>
+            </div>
+        </div>
+
+        <div id="estim" class="section">
+            <h1>5. Estimation et Intervalles de Confiance (IC)</h1>
+            <p>On ne connaît pas la population, on utilise l'échantillon pour "deviner" la réalité avec une marge d'erreur.</p>
+
+            <h2>A. Intervalle de Confiance d'une Moyenne ($\mu$)</h2>
+            
+            <div class="formula-container">
+                <span class="tag-condition">Condition : $n \ge 30$</span>
+                <span class="formula-label">Formule de l'IC (95%)</span>
+                $$IC_{95\%} = \left[ \bar{x} - 1.96 \frac{s'}{\sqrt{n}} \ ; \ \bar{x} + 1.96 \frac{s'}{\sqrt{n}} \right]$$
+                <p class="note">N'oubliez pas d'utiliser $s'$ (corrigé) et non $s$.</p>
+            </div>
+
+            <div class="exercise-wrapper">
+                <div class="exercise-header">📝 Exercice 5.1 : Enquête de salaire</div>
+                <p>Sur 100 femmes, moyenne = 2300€, écart-type corrigé $s'=300€$. <br>
+                Donnez l'IC à 95%.</p>
+                <button class="btn-solution" onclick="toggleSolution('sol5-1')">Solution</button>
+                <div id="sol5-1" class="solution-content">
+                    Marge d'erreur = $1.96 \cdot \frac{300}{\sqrt{100}} = 1.96 \cdot 30 = \mathbf{58.8}$ <br>
+                    $IC = [2300 - 58.8 \ ; \ 2300 + 58.8] = \mathbf{[2241.2 \ ; \ 2358.8]}$
+                </div>
+            </div>
+        </div>
+
+        <div id="tests-logique" class="section">
+            <h1>6. La Logique des Tests d'Hypothèses</h1>
+            <p>Un test n'est pas une preuve absolue, c'est une <strong>décision</strong> prise avec un risque d'erreur contrôlé.</p>
+
+            <div class="hypothesis-box">
+                <strong>Les deux hypothèses :</strong>
+                <ul>
+                    <li><strong>$H_0$ (Nulle) :</strong> "Il ne se passe rien", "C'est pareil", "L'effet est nul".</li>
+                    <li><strong>$H_1$ (Alternative) :</strong> "Il y a une différence", "L'effet est réel".</li>
+                </ul>
+            </div>
+
+            <h2>Les deux risques d'erreur</h2>
             <table>
-                <tr>
-                    <th>Décision \ Réalité</th>
-                    <th>H0 Vraie</th>
-                    <th>H0 Fausse</th>
-                </tr>
-                <tr>
-                    <td><strong>Rejeter H0</strong></td>
-                    <td style="color:red">Risque α (Type I)</td>
-                    <td style="color:green">Puissance (1-β)</td>
-                </tr>
-                <tr>
-                    <td><strong>Accepter H0</strong></td>
-                    <td style="color:green">Décision Correcte</td>
-                    <td style="color:red">Risque β (Type II)</td>
-                </tr>
+                <tr><th>Réalité / Décision</th><th>Accepter $H_0$</th><th>Rejeter $H_0$</th></tr>
+                <tr><td><strong>$H_0$ est Vraie</strong></td><td style="color:green">Bravo</td><td style="color:red"><b>Risque $\alpha$</b> (Type I) : Croire à un effet imaginaire</td></tr>
+                <tr><td><strong>$H_0$ est Fausse</strong></td><td style="color:red"><b>Risque $\beta$</b> (Type II) : Rater un effet réel</td><td style="color:green">Puissance ($1-\beta$)</td></tr>
             </table>
 
-            <p><strong>P-valeur (p-value) :</strong> C'est la probabilité d'obtenir le résultat observé si $H_0$ est vraie. <br>
-            <span class="important">Règle d'or :</span> Si $p \le 0.05 \rightarrow$ Rejet de $H_0$.</p>
+            <div class="important-text">
+                <center><strong>Règle d'or de la p-valeur :</strong></center>
+                <p style="font-size: 1.2rem; text-align: center;">
+                    Si $p \le 0.05 \implies$ Rejet de $H_0$ (Significatif) <br>
+                    Si $p > 0.05 \implies$ Non Rejet de $H_0$ (Pas significatif)
+                </p>
+            </div>
         </div>
 
-        <div id="chap6" class="section">
-            <h1>6. Catalogue : Tests de comparaison de moyennes</h1>
-
-            <h2>A. Comparaison d'une moyenne à une norme</h2>
-            <div class="hypothesis-box">
-                $H_0 : \mu = \mu_0$ <br> $H_1 : \mu \neq \mu_0$
-            </div>
-            <div class="formula-card">
-                $$Z_{obs} = \frac{\bar{x} - \mu_0}{s' / \sqrt{n}}$$
-            </div>
-
-            <h2>B. Comparaison de deux moyennes (Indépendantes)</h2>
-            <div class="hypothesis-box">
-                $H_0 : \mu_1 = \mu_2$ <br> $H_1 : \mu_1 \neq \mu_2$
-            </div>
+        <div id="catalogue" class="section">
+            <h1>7. Catalogue des Tests Statistiques</h1>
             
-            <p><strong>Test de Student (Variances égales) :</strong></p>
-            <div class="formula-card">
-                $$T = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{s_{pool}^2 (\frac{1}{n_1} + \frac{1}{n_2})}}$$
+            <h2>A. Comparaison de 2 moyennes (Test de Student / Welch)</h2>
+            <div class="hypothesis-box">$H_0: \mu_1 = \mu_2$ vs $H_1: \mu_1 \neq \mu_2$</div>
+            <div class="formula-container">
+                $$T = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s'^2_1}{n_1} + \frac{s'^2_2}{n_2}}}$$
+                <p class="note">Si $T_{obs} > T_{seuil}$, on rejette l'égalité.</p>
             </div>
 
-            <p><strong>Test de Welch (Variances inégales) :</strong> <br>
-            Utilisé par défaut dans R car il est plus robuste.</p>
-
-            <div class="exercise-box">
-                <h3>✍️ Exercice 6.1 (Salaires)</h3>
-                <p>H : 2500€, F : 2300€. p-value du t.test = 0.02. Concluez.</p>
-                <button class="btn-show" onclick="toggleAnswer('ans6')">Vérifier la réponse</button>
-                <div id="ans6" class="answer">
-                    Puisque $0.02 \le 0.05$, on rejette $H_0$. <br>
-                    <strong>L'écart de salaire est statistiquement significatif.</strong>
-                </div>
+            <h2>B. Test d'indépendance du Khi-Deux ($\chi^2$)</h2>
+            <p>Pour lier deux variables qualitatives (ex: Sexe et Diplôme).</p>
+            <div class="formula-container">
+                <span class="formula-label">Statistique du $\chi^2$</span>
+                $$\chi^2 = \sum \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
+                <p class="note">O = Observé, E = Espéré (Théorique).</p>
+            </div>
+            <div class="formula-container">
+                <span class="formula-label">Calcul de l'effectif Théorique ($E_{ij}$)</span>
+                $$E_{ij} = \frac{\text{Total Ligne} \times \text{Total Colonne}}{\text{Total Général}}$$
             </div>
         </div>
 
-        <div id="chap7" class="section">
-            <h1>7. Test d'Indépendance du Khi-Deux (χ²)</h1>
-            <p>Utilisé pour tester le lien entre deux variables qualitatives.</p>
+        <div id="exam" class="section">
+            <h1>⭐ EXAMEN FINAL DE SYNTHÈSE</h1>
+            <p>Cet examen regroupe tous les concepts clés de ton cours (basé sur tes fichiers).</p>
 
-            <div class="hypothesis-box">
-                $H_0 :$ Les deux variables sont indépendantes. <br>
-                $H_1 :$ Il existe un lien (dépendance) entre les variables.
-            </div>
-
-            <h2>Formules du χ²</h2>
-            <p><strong>Effectifs Théoriques ($n_{ij}^*$) :</strong></p>
-            <div class="formula-card">
-                $$n_{ij}^* = \frac{\text{Total Ligne} \times \text{Total Colonne}}{\text{Total Général}}$$
-            </div>
-
-            <p><strong>Statistique de test :</strong></p>
-            <div class="formula-card">
-                $$\chi^2 = \sum \frac{(n_{obs} - n_{th})^2}{n_{th}}$$
-            </div>
-
-            <p><strong>Degrés de liberté (ddl) :</strong> $(L-1)(C-1)$</p>
-        </div>
-
-        <div id="final" class="section">
-            <h1>💎 EXAMEN FINAL DE SYNTHÈSE</h1>
-            <p><i>Cet examen simule une épreuve réelle basée sur tes supports de cours.</i></p>
-
-            <div class="exercise-box">
-                <h3>Partie 1 : Corrélation (Pétanque)</h3>
-                <p>On étudie la corrélation entre la Taille ($X$) et le Poids ($Y$) de 10 joueurs. On trouve $r = 0.95$. <br>
-                1. Quelle est la nature de la liaison ? <br>
-                2. On effectue le test de significativité de r. $H_0 : r=0$. On trouve $p = 0.0001$. Concluez.</p>
-                <button class="btn-show" onclick="toggleAnswer('ex1')">Voir le corrigé</button>
-                <div id="ex1" class="answer">
-                    1. Liaison positive très forte (proche de 1). <br>
-                    2. $p < 0.05 \rightarrow$ Rejet de $H_0$. La corrélation est statistiquement significative.
+            <div class="exercise-wrapper" style="border-style: solid; border-width: 4px;">
+                <div class="exercise-header">🔥 Épreuve 1 : Corrélation & Student</div>
+                <p>On étudie 10 joueurs de pétanque. $r = 0.96$. <br>
+                1. On teste $H_0: r=0$. Le seuil de Student à 5% est de 2.30. La statistique calculée est $t = 9.7$. <br>
+                <strong>Conclusion ?</strong></p>
+                <button class="btn-solution" onclick="toggleSolution('f1')">Réponse</button>
+                <div id="f1" class="answer">
+                    Puisque $t_{calc} (9.7) > t_{seuil} (2.30)$, on <strong>rejette $H_0$</strong>. <br>
+                    La corrélation est statistiquement très significative. Il existe un lien réel entre la taille et le poids.
                 </div>
-            </div>
 
-            <div class="exercise-box">
-                <h3>Partie 2 : Test du Khi-2 (Accidents)</h3>
-                <p>On veut savoir si le nombre d'accidents (0, 1, 2+) dépend de l'âge (Jeune, Senior). <br>
-                $\chi^2_{obs} = 12.5$. Pour $ddl=2$ au seuil 5%, la table donne $\chi^2_{seuil} = 5.99$. <br>
-                Concluez sur l'indépendance.</p>
-                <button class="btn-show" onclick="toggleAnswer('ex2')">Voir le corrigé</button>
-                <div id="ex2" class="answer">
-                    Puisque $\chi^2_{obs} (12.5) > \chi^2_{seuil} (5.99)$, on rejette l'hypothèse d'indépendance. <br>
-                    <strong>L'âge influence significativement le nombre d'accidents.</strong>
+                <div class="exercise-header" style="margin-top:40px;">🔥 Épreuve 2 : Loi Normale</div>
+                <p>La durée mensuelle de travail suit $N(151 , 12)$. <br>
+                Quelle est la proportion de salariés travaillant plus de 160h ?</p>
+                <button class="btn-solution" onclick="toggleSolution('f2')">Réponse</button>
+                <div id="f2" class="answer">
+                    1. Centrage : $Z = (160 - 151) / 12 = 9 / 12 = \mathbf{0.75}$ <br>
+                    2. Table : $P(Z \le 0.75) = 0.7734$ <br>
+                    3. On cherche "plus de", donc $1 - 0.7734 = \mathbf{0.2266}$. <br>
+                    <em>Environ 22.7% des salariés.</em>
                 </div>
-            </div>
 
-            <div class="exercise-box">
-                <h3>Partie 3 : Estimation (Enquête Emploi)</h3>
-                <p>Sur 400 femmes, le salaire moyen est de 2100€ avec un écart-type corrigé de 200€. <br>
-                Construisez l'IC à 95% de la moyenne.</p>
-                <button class="btn-show" onclick="toggleAnswer('ex3')">Voir le corrigé</button>
-                <div id="ex3" class="answer">
-                    Erreur type = $200 / \sqrt{400} = 200 / 20 = 10$. <br>
-                    Marge d'erreur = $1.96 \cdot 10 = 19.6$. <br>
-                    <strong>IC = [2080.4€ ; 2119.6€]</strong>.
+                <div class="exercise-header" style="margin-top:40px;">🔥 Épreuve 3 : Khi-Deux</div>
+                <p>Tableau Accidents (0, 1) / Âge (Jeune, Vieux). On trouve $\chi^2_{calc} = 8.4$. Le seuil est de 3.84. <br>
+                <strong>L'âge influence-t-il les accidents ?</strong></p>
+                <button class="btn-solution" onclick="toggleSolution('f3')">Réponse</button>
+                <div id="f3" class="answer">
+                    $8.4 > 3.84 \implies$ Rejet de l'indépendance. <br>
+                    <strong>Oui</strong>, l'âge a une influence significative sur le nombre d'accidents.
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        function showTab(tabId) {
-            // Masquer toutes les sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(s => s.classList.remove('active'));
-
-            // Désactiver tous les items du menu
-            const items = document.querySelectorAll('#menu li');
-            items.forEach(i => i.classList.remove('active'));
-
-            // Afficher la section demandée
-            document.getElementById(tabId).classList.add('active');
-
-            // Mettre en gras l'item du menu (via event target ou recherche)
-            const activeItem = Array.from(items).find(i => i.getAttribute('onclick').includes(tabId));
-            if (activeItem) activeItem.classList.add('active');
-
-            // Scroll to top
-            window.scrollTo(0, 0);
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('#menu li').forEach(li => li.classList.remove('active'));
+            
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
+            window.scrollTo(0,0);
         }
 
-        function toggleAnswer(id) {
-            const el = document.getElementById(id);
-            if (el.style.display === 'block') {
-                el.style.display = 'none';
-            } else {
-                el.style.display = 'block';
-            }
+        function toggleSolution(id) {
+            let el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
         }
     </script>
 </body>
 </html>
-
-
