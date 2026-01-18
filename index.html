@@ -3,51 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Statistique Inférentielle - Le Manuel Ultime</title>
+    <title>Master Statistique 2026 - Théorie & Challenge</title>
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
         :root {
-            --primary-color: #0d47a1;
-            --secondary-color: #1565c0;
-            --accent-color: #f57c00;
-            --bg-color: #eceff1;
-            --card-bg: #ffffff;
-            --text-color: #263238;
-            --success-color: #2e7d32;
-            --error-color: #c62828;
-            --formula-bg: #f8f9fa;
+            --primary: #002f6c;
+            --secondary: #0056b3;
+            --accent: #ff6f00;
+            --bg: #f8f9fa;
+            --white: #ffffff;
+            --text: #1a1a1a;
+            --success: #28a745;
+            --formula-box: #f1f8ff;
+            --exercise-box: #fff3e0;
+            --quiz-box: #e8f5e9;
         }
 
         body {
-            font-family: 'Times New Roman', Times, serif; /* Pour un aspect académique */
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Georgia', serif;
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
             display: flex;
             min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.8;
         }
 
-        /* --- NAVIGATION LATERALE --- */
+        /* --- NAVIGATION --- */
         nav {
-            width: 320px;
-            background-color: var(--primary-color);
+            width: 350px;
+            background-color: var(--primary);
             color: white;
             position: fixed;
             height: 100vh;
             overflow-y: auto;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+            box-shadow: 5px 0 15px rgba(0,0,0,0.2);
             z-index: 1000;
         }
 
         nav h2 {
             padding: 30px 20px;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             text-align: center;
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 3px solid var(--accent);
             margin: 0;
             background: rgba(0,0,0,0.2);
             font-family: 'Segoe UI', sans-serif;
@@ -60,35 +61,38 @@
         }
 
         nav ul li {
-            padding: 20px 25px;
+            padding: 22px 30px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'Segoe UI', sans-serif;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
         }
 
         nav ul li:hover {
-            background-color: var(--secondary-color);
-            padding-left: 35px;
+            background-color: var(--secondary);
+            padding-left: 45px;
+            color: var(--accent);
         }
 
         nav ul li.active {
-            background-color: var(--accent-color);
+            background-color: var(--accent);
+            color: white;
             font-weight: bold;
+            border-left: 8px solid white;
         }
 
         /* --- CONTENU --- */
         main {
-            margin-left: 320px;
-            padding: 60px;
-            width: calc(100% - 320px);
+            margin-left: 350px;
+            padding: 80px;
+            width: calc(100% - 350px);
             box-sizing: border-box;
         }
 
         .section {
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.4s ease-out;
         }
 
         .section.active {
@@ -96,298 +100,257 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; } to { opacity: 1; }
         }
 
         /* --- TYPOGRAPHIE --- */
         h1 {
             font-family: 'Segoe UI', sans-serif;
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 40px;
-            border-bottom: 5px solid var(--accent-color);
-            display: inline-block;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+            border-left: 12px solid var(--accent);
+            padding-left: 25px;
         }
 
         h2 {
             font-family: 'Segoe UI', sans-serif;
-            font-size: 2rem;
-            color: var(--secondary-color);
-            margin-top: 60px;
-            background: #e3f2fd;
-            padding: 10px 20px;
-            border-radius: 8px;
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-top: 70px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
         }
 
-        h3 {
-            font-size: 1.5rem;
-            margin-top: 40px;
-            color: #455a64;
-            border-left: 5px solid var(--accent-color);
-            padding-left: 15px;
-        }
-
-        /* --- BLOCS FORMULES --- */
         .formula-card {
-            background: var(--formula-bg);
-            border: 2px solid #cfd8dc;
-            border-radius: 12px;
-            padding: 40px;
-            margin: 30px 0;
+            background: var(--formula-box);
+            border: 2px solid #b3d7ff;
+            border-radius: 15px;
+            padding: 50px;
+            margin: 40px 0;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .formula-title {
             display: block;
             font-weight: bold;
             text-transform: uppercase;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-family: 'Segoe UI', sans-serif;
-            letter-spacing: 1px;
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
         }
 
-        /* --- BLOCS EXERCICES ET CORRECTIONS --- */
-        .exercise-container {
-            background: #fff;
-            border: 2px solid #2e7d32;
-            border-radius: 15px;
-            padding: 35px;
-            margin: 50px 0;
+        /* --- BOITES DE CORRECTION (LISIBILITÉ MAXIMALE) --- */
+        .correction-box {
+            display: none;
+            background: #ffffff;
+            border: 3px solid var(--success);
+            border-radius: 12px;
+            padding: 45px;
+            margin-top: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            font-size: 1.3rem; /* Lecture facile */
+            color: #1a1a1a;
         }
 
-        .exercise-title {
-            color: #1b5e20;
+        .step {
+            margin-bottom: 30px;
+            padding-left: 20px;
+            border-left: 4px solid var(--success);
+        }
+
+        .step-title {
             font-weight: bold;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
+            color: var(--success);
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
         }
 
-        .btn-solution {
-            background-color: var(--success-color);
+        .btn-action {
+            background-color: var(--secondary);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
+            padding: 18px 40px;
+            border-radius: 50px;
             font-size: 1.1rem;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 20px;
             transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .btn-solution:hover {
-            background-color: #1b5e20;
-            transform: scale(1.05);
+        .btn-action:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
         }
 
-        .solution-box {
-            display: none;
-            background: #ffffff;
-            border-top: 4px solid var(--success-color);
-            padding: 40px;
-            margin-top: 30px;
-            box-shadow: 0 -10px 20px rgba(0,0,0,0.05), 0 10px 20px rgba(0,0,0,0.1);
-            font-size: 1.2rem; /* Taille de lecture augmentée */
-        }
-
-        .solution-step {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed #ddd;
-        }
-
-        .solution-step:last-child { border-bottom: none; }
-
-        .step-number {
-            background: var(--success-color);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 50%;
-            margin-right: 10px;
-            font-weight: bold;
-        }
-
-        /* --- TABLES --- */
+        /* --- TABLEAUX --- */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 30px 0;
-            font-size: 1.1rem;
+            margin: 40px 0;
+            background: white;
+            font-size: 1.2rem;
         }
 
         th, td {
-            border: 1px solid #b0bec5;
-            padding: 18px;
+            border: 2px solid #dee2e6;
+            padding: 20px;
             text-align: center;
         }
 
         th {
-            background-color: var(--primary-color);
+            background-color: var(--primary);
             color: white;
         }
 
-        tr:nth-child(even) { background-color: #f1f8e9; }
+        .highlight { background-color: #fff9c4; font-weight: bold; }
 
-        .important-note {
-            background: #fff9c4;
-            padding: 20px;
-            border-left: 10px solid #fbc02d;
-            margin: 20px 0;
+        /* --- QUIZ STYLES --- */
+        .quiz-item {
+            background: var(--quiz-box);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 8px solid var(--success);
+        }
+
+        .question-text {
             font-weight: bold;
+            font-size: 1.4rem;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            display: block;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <h2>Cours Statistique 2026</h2>
+        <h2>📚 Manuel de Révision</h2>
         <ul>
-            <li class="active" onclick="openSection('sec-desc')">I. Statistiques Descriptives</li>
-            <li onclick="openSection('sec-mediane')">II. Calcul de la Médiane</li>
-            <li onclick="openSection('sec-liens')">III. Covariance & Corrélation</li>
-            <li onclick="openSection('sec-loi-normale')">IV. La Loi Normale</li>
-            <li onclick="openSection('sec-estim')">V. Estimation & IC</li>
-            <li onclick="openSection('sec-tests')">VI. Logique des Tests</li>
-            <li onclick="openSection('sec-cata')">VII. Catalogue des Tests</li>
-            <li onclick="openSection('sec-exam')">💎 EXAMEN FINAL</li>
+            <li class="active" onclick="show('intro')">1. Fondements & Descriptif</li>
+            <li onclick="show('mediane')">2. Médiane & Interpolation</li>
+            <li onclick="show('liens')">3. Covariance & Corrélation</li>
+            <li onclick="show('loi-normale')">4. Loi Normale (Calcul de X)</li>
+            <li onclick="show('estimation')">5. Estimation & IC</li>
+            <li onclick="show('tests')">6. Logique des Tests</li>
+            <li onclick="show('catalogue')">7. Catalogue des Tests</li>
+            <li onclick="show('quiz')">🔥 CHALLENGE 20 QUESTIONS</li>
+            <li onclick="show('exam')">💎 EXAMEN FINAL</li>
         </ul>
     </nav>
 
     <main>
 
-        <div id="sec-desc" class="section active">
-            <h1>I. Statistique Descriptive</h1>
-            <p>La statistique descriptive résume les caractéristiques d'un échantillon par des mesures de tendance centrale et de dispersion.</p>
+        <div id="intro" class="section active">
+            <h1>1. Fondements & Statistique Descriptive</h1>
+            <p>La statistique descriptive résume une série de données observées. Elle est le socle de toute l'analyse inférentielle qui suit.</p>
 
-            <h2>1. Mesures de Tendance Centrale</h2>
+            <h2>A. Paramètres de Tendance Centrale</h2>
             <div class="formula-card">
-                <span class="formula-title">La Moyenne Arithmétique ($\bar{x}$)</span>
+                <span class="formula-title">Moyenne Arithmétique ($\bar{x}$)</span>
                 $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
+                <p><i>Note : Sensible aux valeurs extrêmes.</i></p>
             </div>
 
-            <h2>2. Mesures de Dispersion</h2>
+            <h2>B. Paramètres de Dispersion</h2>
             <div class="formula-card">
-                <span class="formula-title">La Variance ($s^2$)</span>
+                <span class="formula-title">Variance de l'échantillon ($s^2$)</span>
                 $$s^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2$$
             </div>
 
             <div class="formula-card">
-                <span class="formula-title">La Variance Corrigée ($s'^2$)</span>
+                <span class="formula-title">Variance Corrigée ($s'^2$) - CRUCIAL</span>
                 $$s'^2 = \frac{n}{n-1} s^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2$$
-                <p><i>Note : Indispensable pour estimer la variance d'une population à partir d'un échantillon.</i></p>
+                <p>On divise par $(n-1)$ pour obtenir un estimateur <strong>sans biais</strong> du paramètre de la population.</p>
             </div>
 
-            <div class="exercise-container">
-                <div class="exercise-title">📝 Exercice 1.1 : Calcul de base</div>
-                <p>On observe la consommation de carburant de 4 véhicules (litres/100km) : <strong>6, 8, 10, 12</strong>. <br>
-                Calculez la moyenne, la variance et l'écart-type corrigé.</p>
-                <button class="btn-solution" onclick="toggleSolution('sol1-1')">Afficher le corrigé détaillé</button>
-                <div id="sol1-1" class="solution-box">
-                    <div class="solution-step">
-                        <span class="step-number">1</span> <strong>Calcul de la Moyenne ($\bar{x}$) :</strong> <br>
-                        $$\bar{x} = \frac{6 + 8 + 10 + 12}{4} = \frac{36}{4} = 9 \text{ L/100km}$$
+            <div class="exercise-wrapper">
+                <h3>📝 Exercice d'application 1.1</h3>
+                <p>Soit les salaires mensuels de 4 individus : 2000, 2200, 2400, 2600. Calculez $\bar{x}$ et $s'^2$.</p>
+                <button class="btn-action" onclick="toggle('sol1')">Afficher le Corrigé</button>
+                <div id="sol1" class="correction-box">
+                    <div class="step">
+                        <span class="step-title">Étape 1 : Calcul de la moyenne</span>
+                        $\bar{x} = \frac{2000+2200+2400+2600}{4} = \frac{9200}{4} = \mathbf{2300€}$
                     </div>
-                    <div class="solution-step">
-                        <span class="step-number">2</span> <strong>Calcul de la Variance ($s^2$) :</strong> <br>
-                        $$s^2 = \frac{(6-9)^2 + (8-9)^2 + (10-9)^2 + (12-9)^2}{4}$$
-                        $$s^2 = \frac{(-3)^2 + (-1)^2 + (1)^2 + (3)^2}{4} = \frac{9 + 1 + 1 + 9}{4} = \frac{20}{4} = 5$$
+                    <div class="step">
+                        <span class="step-title">Étape 2 : Calcul de la variance simple ($s^2$)</span>
+                        $s^2 = \frac{(2000-2300)^2 + (2200-2300)^2 + (2400-2300)^2 + (2600-2300)^2}{4}$ <br>
+                        $s^2 = \frac{90000 + 10000 + 10000 + 90000}{4} = \frac{200000}{4} = \mathbf{50000}$
                     </div>
-                    <div class="solution-step">
-                        <span class="step-number">3</span> <strong>Écart-type Corrigé ($s'$) :</strong> <br>
-                        D'abord la variance corrigée : $s'^2 = \frac{4}{3} \times 5 = 6,67$. <br>
-                        Ensuite l'écart-type : $s' = \sqrt{6,67} \approx 2,58$.
+                    <div class="step">
+                        <span class="step-title">Étape 3 : Calcul de la variance corrigée ($s'^2$)</span>
+                        $s'^2 = \frac{4}{3} \times 50000 = \mathbf{66666.67}$
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="sec-mediane" class="section">
-            <h1>II. La Médiane et l'Interpolation</h1>
-            <p>La médiane ($Me$) sépare la série en deux effectifs égaux. En cas de données regroupées en classes, on utilise l'interpolation linéaire.</p>
+        <div id="mediane" class="section">
+            <h1>2. Médiane & Interpolation Linéaire</h1>
+            <p>Lorsque les données sont regroupées en classes, on estime la médiane par interpolation.</p>
 
             <div class="formula-card">
-                <span class="formula-title">Formule d'Interpolation Linéaire</span>
-                $$\frac{Me - x_{inf}}{0,5 - F_{inf}} = \frac{x_{sup} - x_{inf}}{F_{sup} - F_{inf}}$$
+                <span class="formula-title">Équation d'Interpolation</span>
+                $$\frac{Me - x_{inf}}{0.5 - F_{inf}} = \frac{x_{sup} - x_{inf}}{F_{sup} - F_{inf}}$$
             </div>
 
-            <div class="exercise-container">
-                <div class="exercise-title">📝 Exercice 2.1 : Temps de trajet (Cours du 29 Sept)</div>
-                <table>
-                    <tr><th>Classes</th><th>Effectifs</th><th>Fréq. Cumulées ($F$)</th></tr>
-                    <tr><td>[10 ; 20[</td><td>150</td><td>0,30</td></tr>
-                    <tr style="background: #fff9c4"><td><strong>[20 ; 30[</strong></td><td><strong>200</strong></td><td><strong>0,70</strong></td></tr>
-                    <tr><td>[30 ; 40[</td><td>150</td><td>1,00</td></tr>
-                </table>
-                <p>Calculez la médiane exacte.</p>
-                <button class="btn-solution" onclick="toggleSolution('sol2-1')">Afficher le calcul détaillé</button>
-                <div id="sol2-1" class="solution-box">
-                    <div class="solution-step">
-                        <span class="step-number">1</span> <strong>Identifier la classe médiane :</strong> <br>
-                        On cherche la classe où la fréquence cumulée atteint 0,5. <br>
-                        À la borne 20, on est à 0,30. À la borne 30, on est à 0,70. <br>
-                        La classe médiane est donc <strong>[20 ; 30[</strong>.
-                    </div>
-                    <div class="solution-step">
-                        <span class="step-number">2</span> <strong>Poser les données :</strong> <br>
-                        $x_{inf} = 20, x_{sup} = 30, F_{inf} = 0,30, F_{sup} = 0,70$.
-                    </div>
-                    <div class="solution-step">
-                        <span class="step-number">3</span> <strong>Calcul final :</strong> <br>
-                        $$\frac{Me - 20}{0,5 - 0,3} = \frac{30 - 20}{0,7 - 0,3}$$
-                        $$\frac{Me - 20}{0,2} = \frac{10}{0,4} \implies Me - 20 = 25 \times 0,2 = 5$$
-                        $$Me = 20 + 5 = \mathbf{25}$$
-                    </div>
+            <h2>Exemple complet (Données de Trajet)</h2>
+            <table>
+                <tr><th>Classe</th><th>Effectif</th><th>FCC (Fréq. Cumulées)</th></tr>
+                <tr><td>[0 ; 10[</td><td>100</td><td>0.20</td></tr>
+                <tr class="highlight"><td>[10 ; 20[</td><td>300</td><td>0.80</td></tr>
+                <tr><td>[20 ; 30[</td><td>100</td><td>1.00</td></tr>
+            </table>
+
+            <button class="btn-action" onclick="toggle('sol-med')">Calculer la Médiane</button>
+            <div id="sol-med" class="correction-box">
+                <div class="step">
+                    <span class="step-title">1. Classe Médiane</span>
+                    On cherche 0.5. Elle se situe dans la classe <strong>[10 ; 20[</strong>.
+                </div>
+                <div class="step">
+                    <span class="step-title">2. Paramètres</span>
+                    $x_{inf} = 10, x_{sup} = 20, F_{inf} = 0.20, F_{sup} = 0.80$.
+                </div>
+                <div class="step">
+                    <span class="step-title">3. Résolution</span>
+                    $\frac{Me - 10}{0.5 - 0.2} = \frac{20 - 10}{0.8 - 0.2}$ <br>
+                    $\frac{Me - 10}{0.3} = \frac{10}{0.6} = 16.66$ <br>
+                    $Me - 10 = 16.66 \times 0.3 = 5$ <br>
+                    $\mathbf{Me = 15}$
                 </div>
             </div>
         </div>
 
-        <div id="sec-liens" class="section">
-            <h1>III. Covariance & Corrélation</h1>
-            <p>Ces paramètres mesurent l'intensité et le sens du lien entre deux variables quantitatives.</p>
+        <div id="liens" class="section">
+            <h1>3. Covariance & Corrélation</h1>
+            <p>Mesure de la dépendance linéaire entre deux variables $X$ et $Y$.</p>
 
             <div class="formula-card">
-                <span class="formula-title">La Covariance ($Cov_{xy}$)</span>
-                $$Cov(x,y) = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})$$
+                <span class="formula-title">Covariance</span>
+                $$Cov(x,y) = \frac{1}{n} \sum (x_i - \bar{x})(y_i - \bar{y})$$
             </div>
 
             <div class="formula-card">
-                <span class="formula-title">Coefficient de Corrélation ($r$)</span>
+                <span class="formula-title">Coefficient de Pearson ($r$)</span>
                 $$r = \frac{Cov(x,y)}{s_x \cdot s_y}$$
+                <p>Valeur entre -1 et 1. <strong>r = 0</strong> signifie aucune corrélation linéaire.</p>
             </div>
+            
 
-            <div class="exercise-container">
-                <div class="exercise-title">📝 Exercice 3.1 : Joueurs de Pétanque</div>
-                <p>Taille ($x$) : 1,70 et 1,90. <br> Poids ($y$) : 70 et 90. <br>
-                Calculez $r$.</p>
-                <button class="btn-solution" onclick="toggleSolution('sol3-1')">Afficher le corrigé</button>
-                <div id="sol3-1" class="solution-box">
-                    <div class="solution-step">
-                        <span class="step-number">1</span> Moyennes : $\bar{x} = 1,80$ et $\bar{y} = 80$.
-                    </div>
-                    <div class="solution-step">
-                        <span class="step-number">2</span> Covariance : <br>
-                        $$Cov = \frac{(1,7-1,8)(70-80) + (1,9-1,8)(90-80)}{2} = \frac{1 + 1}{2} = 1$$
-                    </div>
-                    <div class="solution-step">
-                        <span class="step-number">3</span> Écarts-types : $s_x = 0,1$ et $s_y = 10$.
-                    </div>
-                    <div class="solution-step">
-                        <span class="step-number">4</span> Résultat : <br>
-                        $$r = \frac{1}{0,1 \times 10} = \mathbf{1}$$
-                        Conclusion : Liaison positive parfaite.
-                    </div>
-                </div>
-            </div>
+[Image of scatter plots showing positive, negative, and no correlation]
+
         </div>
 
-        <div id="sec-loi-normale" class="section">
-            <h1>IV. La Loi Normale $N(\mu, \sigma)$</h1>
-            <p>Pour calculer des probabilités, on transforme la variable $X$ en variable centrée réduite $Z$.</p>
+        <div id="loi-normale" class="section">
+            <h1>4. La Loi Normale $N(\mu, \sigma)$</h1>
+            <p>La transformation vers la loi standard $N(0, 1)$ est l'étape obligée pour tout calcul.</p>
 
             <div class="formula-card">
                 <span class="formula-title">Variable Centrée Réduite ($Z$)</span>
@@ -395,129 +358,139 @@
             </div>
 
             <div class="formula-card">
-                <span class="formula-title">Formule Inverse (Trouver $X$)</span>
-                $$X = \mu + Z \cdot \sigma$$
+                <span class="formula-title">Trouver X à partir d'une probabilité</span>
+                $$X = \mu + (Z \cdot \sigma)$$
             </div>
 
-            <div class="exercise-container">
-                <div class="exercise-title">📝 Exercice 4.1 : Calcul de Probabilité</div>
-                <p>Soit $X \sim N(100, 15)$. Calculez $P(X < 130)$.</p>
-                <button class="btn-solution" onclick="toggleSolution('sol4-1')">Afficher la solution</button>
-                <div id="sol4-1" class="solution-box">
-                    <div class="solution-step">
-                        <span class="step-number">1</span> Calculer $Z$ : <br>
-                        $$Z = \frac{130 - 100}{15} = \frac{30}{15} = 2$$
-                    </div>
-                    <div class="solution-step">
-                        <span class="step-number">2</span> Lecture de la table : <br>
-                        Pour $Z = 2,00$, la table de la loi normale donne $\mathbf{0,9772}$. <br>
-                        <strong>Réponse :</strong> Il y a 97,72% de chances.
-                    </div>
+            <div class="exercise-wrapper">
+                <h3>📝 Exercice : Calcul inverse</h3>
+                <p>Taille moyenne $\mu=1.75$m, $\sigma=0.10$m. Quelle est la taille minimale pour être dans les 5% les plus grands ? <br> (Note : pour 95%, $Z=1.645$)</p>
+                <button class="btn-action" onclick="toggle('sol-ln')">Voir Solution</button>
+                <div id="sol-ln" class="correction-box">
+                    $X = 1.75 + (1.645 \times 0.10)$ <br>
+                    $X = 1.75 + 0.1645 = \mathbf{1.9145 \text{ m}}$
                 </div>
             </div>
+            
         </div>
 
-        <div id="sec-estim" class="section">
-            <h1>V. Estimation & Intervalle de Confiance (IC)</h1>
-            <p>L'objectif est d'estimer un paramètre inconnu de la population à partir d'un échantillon.</p>
+        <div id="estimation" class="section">
+            <h1>5. Estimation & Intervalles de Confiance</h1>
+            
+            <div class="formula-card">
+                <span class="formula-title">IC de la Moyenne ($\mu$) - 95%</span>
+                $$IC = \left[ \bar{x} - 1.96 \frac{s'}{\sqrt{n}} \ ; \ \bar{x} + 1.96 \frac{s'}{\sqrt{n}} \right]$$
+            </div>
 
             <div class="formula-card">
-                <span class="formula-title">IC de la Moyenne (95%)</span>
-                $$IC_{95\%} = \left[ \bar{x} - 1,96 \frac{s'}{\sqrt{n}} \ ; \ \bar{x} + 1,96 \frac{s'}{\sqrt{n}} \right]$$
-            </div>
-
-            <div class="exercise-container">
-                <div class="exercise-title">📝 Exercice 5.1 : Salaire des femmes</div>
-                <p>Sur 100 femmes, moyenne = 2300€, $s' = 200€$. Donnez l'IC à 95%.</p>
-                <button class="btn-solution" onclick="toggleSolution('sol5-1')">Afficher la solution</button>
-                <div id="sol5-1" class="solution-box">
-                    <div class="solution-step">
-                        <span class="step-number">1</span> Erreur Type : $\frac{200}{\sqrt{100}} = \frac{200}{10} = 20$.
-                    </div>
-                    <div class="solution-step">
-                        <span class="step-number">2</span> Marge d'erreur : $1,96 \times 20 = 39,2$.
-                    </div>
-                    <div class="solution-step">
-                        <span class="step-number">3</span> Intervalle : <br>
-                        $IC = [2300 - 39,2 \ ; \ 2300 + 39,2] = \mathbf{[2260,8€ \ ; \ 2339,2€]}$.
-                    </div>
-                </div>
+                <span class="formula-title">IC d'une Proportion ($p$) - 95%</span>
+                $$IC = \left[ \hat{p} - 1.96 \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \ ; \ \hat{p} + 1.96 \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \right]$$
             </div>
         </div>
 
-        <div id="sec-tests" class="section">
-            <h1>VI. Logique des Tests d'Hypothèses</h1>
-            <div class="important-note">
-                <strong>Règle d'or :</strong> On rejette $H_0$ si la p-valeur $\le 0,05$.
-            </div>
+        <div id="tests" class="section">
+            <h1>6. La Logique des Tests d'Hypothèses</h1>
+            <p>On ne "prouve" pas $H_1$, on <strong>rejette</strong> $H_0$ avec un risque $\alpha$.</p>
 
-            <h3>Les Risques d'Erreur :</h3>
-            <ul>
-                <li><strong>Risque $\alpha$ :</strong> Rejeter $H_0$ à tort (voir un effet qui n'existe pas).</li>
-                <li><strong>Risque $\beta$ :</strong> Accepter $H_0$ à tort (ne pas voir un effet qui existe).</li>
-            </ul>
+            <table>
+                <tr><th>Réalité / Décision</th><th>Accepter $H_0$</th><th>Rejeter $H_0$</th></tr>
+                <tr><td><strong>$H_0$ est Vraie</strong></td><td style="color:green">Correct</td><td style="color:red">Erreur de Type I ($\alpha$)</td></tr>
+                <tr><td><strong>$H_0$ est Fausse</strong></td><td style="color:red">Erreur de Type II ($\beta$)</td><td style="color:green">Puissance ($1-\beta$)</td></tr>
+            </table>
 
-            <div class="exercise-container">
-                <div class="exercise-title">📝 Exercice 6.1 : Test de Médicament</div>
-                <p>$H_0$ : "Le médicament est inutile". <br> Le test donne $p = 0,02$. Que faites-vous ?</p>
-                <button class="btn-solution" onclick="toggleSolution('sol6-1')">Solution</button>
-                <div id="sol6-1" class="solution-box">
-                    Puisque $0,02 < 0,05$, on <strong>rejette $H_0$</strong>. <br>
-                    Le médicament est statistiquement efficace.
-                </div>
+            <div class="important-note" style="font-size: 1.5rem; text-align: center;">
+                Règle d'or : p-value < 0.05 $\implies$ Rejet de $H_0$
             </div>
         </div>
 
-        <div id="sec-cata" class="section">
-            <h1>VII. Catalogue des Tests</h1>
-            
-            <h3>1. Test de Student (Comparaison de moyennes)</h3>
-            <p>Utilisé pour comparer si deux groupes (H/F) ont la même moyenne.</p>
+        <div id="quiz" class="section">
+            <h1>🔥 Challenge : 20 Questions de Théorie</h1>
+            <p>Teste tes connaissances fondamentales avant l'examen.</p>
 
-            <h3>2. Test du Khi-Deux (χ²)</h3>
-            <p>Utilisé pour tester l'indépendance entre deux variables qualitatives (ex: Sexe et Diplôme).</p>
-            <div class="formula-card">
-                <span class="formula-title">Calcul de l'effectif Théorique ($E_{ij}$)</span>
-                $$E_{ij} = \frac{\text{Total Ligne} \times \text{Total Colonne}}{\text{Total Général}}$$
-            </div>
-
-            <div class="exercise-container">
-                <div class="exercise-title">📝 Exercice 7.1 : Accidents et Âge</div>
-                <p>On observe 100 conducteurs. Total Jeunes : 40. Total Accidents : 20. <br>
-                Quel est l'effectif théorique de jeunes ayant eu un accident sous $H_0$ ?</p>
-                <button class="btn-solution" onclick="toggleSolution('sol7-1')">Solution</button>
-                <div id="sol7-1" class="solution-box">
-                    $$E = \frac{40 \times 20}{100} = \mathbf{8 \text{ conducteurs}}$$
+            <div id="quiz-container">
+                <div class="quiz-item">
+                    <span class="question-text">1. Quelle est la différence entre une statistique et un paramètre ?</span>
+                    <button class="btn-action" onclick="toggle('q1')">Réponse</button>
+                    <div id="q1" class="correction-box">La statistique est calculée sur un <strong>échantillon</strong> (ex: $\bar{x}$), le paramètre caractérise la <strong>population</strong> entière (ex: $\mu$).</div>
                 </div>
+
+                <div class="quiz-item">
+                    <span class="question-text">2. Pourquoi utilise-t-on $n-1$ au dénominateur de la variance ?</span>
+                    <button class="btn-action" onclick="toggle('q2')">Réponse</button>
+                    <div id="q2" class="correction-box">Pour corriger le biais. Diviser par $n$ sous-estime la variance de la population. Avec $n-1$, l'estimateur devient <strong>sans biais</strong>.</div>
+                </div>
+
+                <div class="quiz-item">
+                    <span class="question-text">3. Qu'est-ce qu'une variable centrée réduite ?</span>
+                    <button class="btn-action" onclick="toggle('q3')">Réponse</button>
+                    <div id="q3" class="correction-box">C'est une variable à laquelle on a soustrait sa moyenne (centrage) et divisé par son écart-type (réduction). Elle suit une loi $N(0, 1)$.</div>
+                </div>
+
+                <div class="quiz-item">
+                    <span class="question-text">4. Énoncez le Théorème Central Limite (TCL).</span>
+                    <button class="btn-action" onclick="toggle('q4')">Réponse</button>
+                    <div id="q4" class="correction-box">Si $n \ge 30$, la distribution de la moyenne d'un échantillon tend vers une loi normale, quelle que soit la loi de la population d'origine.</div>
+                </div>
+
+                <div class="quiz-item">
+                    <span class="question-text">5. Que signifie "IC à 95%" ?</span>
+                    <button class="btn-action" onclick="toggle('q5')">Réponse</button>
+                    <div id="q5" class="correction-box">Si on répète l'échantillonnage 100 fois, 95 des intervalles calculés contiendront la vraie valeur du paramètre de la population.</div>
+                </div>
+
+                <div class="quiz-item">
+                    <span class="question-text">6. Qu'est-ce que l'erreur de type I ($\alpha$) ?</span>
+                    <button class="btn-action" onclick="toggle('q6')">Réponse</button>
+                    <div id="q6" class="correction-box">C'est le risque de rejeter $H_0$ alors qu'elle est en réalité vraie (faux positif).</div>
+                </div>
+
+                <div class="quiz-item">
+                    <span class="question-text">7. Que mesure le coefficient de Pearson $r$ ?</span>
+                    <button class="btn-action" onclick="toggle('q7')">Réponse</button>
+                    <div id="q7" class="correction-box">L'intensité et le sens de la liaison <strong>linéaire</strong> entre deux variables quantitatives.</div>
+                </div>
+
+                <div class="quiz-item">
+                    <span class="question-text">8. Quelle est l'hypothèse nulle ($H_0$) dans un test du Khi-deux ?</span>
+                    <button class="btn-action" onclick="toggle('q8')">Réponse</button>
+                    <div id="q8" class="correction-box">Les deux variables qualitatives sont <strong>indépendantes</strong>.</div>
+                </div>
+
+                <div class="quiz-item">
+                    <span class="question-text">9. Comment calcule-t-on les degrés de liberté d'un tableau de contingence ?</span>
+                    <button class="btn-action" onclick="toggle('q9')">Réponse</button>
+                    <div id="q9" class="correction-box">$ddl = (Lignes - 1) \times (Colonnes - 1)$.</div>
+                </div>
+
+                <div class="quiz-item">
+                    <span class="question-text">10. Quelle est la conséquence d'une p-value = 0.001 au seuil de 5% ?</span>
+                    <button class="btn-action" onclick="toggle('q10')">Réponse</button>
+                    <div id="q10" class="correction-box">$0.001 < 0.05 \implies$ On rejette $H_0$. Le résultat est hautement significatif.</div>
+                </div>
+
+                <div class="quiz-item"><span class="question-text">11. Quel test utiliser pour comparer deux moyennes ?</span><button class="btn-action" onclick="toggle('q11')">R</button><div id="q11" class="correction-box">Le test de Student (t-test) ou test de Welch.</div></div>
+                <div class="quiz-item"><span class="question-text">12. Que signifie une covariance positive ?</span><button class="btn-action" onclick="toggle('q12')">R</button><div id="q12" class="correction-box">Les deux variables évoluent globalement dans le même sens.</div></div>
+                <div class="quiz-item"><span class="question-text">13. Qu'est-ce que l'homoscédasticité ?</span><button class="btn-action" onclick="toggle('q13')">R</button><div id="q13" class="correction-box">L'égalité des variances entre plusieurs groupes.</div></div>
+                <div class="quiz-item"><span class="question-text">14. Quelle loi suit la statistique du test de Fisher ?</span><button class="btn-action" onclick="toggle('q14')">R</button><div id="q14" class="correction-box">La loi de Fisher-Snedecor (F).</div></div>
+                <div class="quiz-item"><span class="question-text">15. Quel est l'effet de l'augmentation de $n$ sur la largeur de l'IC ?</span><button class="btn-action" onclick="toggle('q15')">R</button><div id="q15" class="correction-box">Elle diminue (la précision augmente).</div></div>
+                <div class="quiz-item"><span class="question-text">16. La médiane est-elle sensible aux valeurs extrêmes ?</span><button class="btn-action" onclick="toggle('q16')">R</button><div id="q16" class="correction-box">Non, elle est robuste contrairement à la moyenne.</div></div>
+                <div class="quiz-item"><span class="question-text">17. Quelle est l'espérance d'une loi $N(0,1)$ ?</span><button class="btn-action" onclick="toggle('q17')">R</button><div id="q17" class="correction-box">Elle est égale à 0.</div></div>
+                <div class="quiz-item"><span class="question-text">18. Qu'est-ce que la puissance d'un test ?</span><button class="btn-action" onclick="toggle('q18')">R</button><div id="q18" class="correction-box">Probabilité de rejeter $H_0$ quand elle est effectivement fausse ($1-\beta$).</div></div>
+                <div class="quiz-item"><span class="question-text">19. Quelle est la condition d'application du test du Khi-deux ?</span><button class="btn-action" onclick="toggle('q19')">R</button><div id="q19" class="correction-box">Tous les effectifs théoriques doivent être $\ge 5$.</div></div>
+                <div class="quiz-item"><span class="question-text">20. Corrélation signifie-t-elle causalité ?</span><button class="btn-action" onclick="toggle('q20')">R</button><div id="q20" class="correction-box">NON. Un lien statistique n'implique pas forcément qu'une variable cause l'autre.</div></div>
             </div>
         </div>
 
-        <div id="sec-exam" class="section">
-            <h1>💎 EXAMEN FINAL DE SYNTHÈSE</h1>
-            
-            <div class="exercise-container">
-                <div class="exercise-title">🔥 Question 1 : Loi Normale Inverse</div>
-                <p>Salaire moyen $\mu=2200, \sigma=400$. Quel salaire faut-il pour être dans les 2,5% les plus riches ? <br>
-                (Indice : $Z = 1,96$ pour 0,9750).</p>
-                <button class="btn-solution" onclick="toggleSolution('ex1')">Voir Solution</button>
-                <div id="ex1" class="solution-box">
-                    $$X = 2200 + (1,96 \times 400) = 2200 + 784 = \mathbf{2984€}$$
-                </div>
-
-                <div class="exercise-title" style="margin-top:40px;">🔥 Question 2 : Test du Khi-deux</div>
-                <p>$\chi^2_{obs} = 12,5$. Seuil critique = 3,84. <br> Concluez.</p>
-                <button class="btn-solution" onclick="toggleSolution('ex2')">Voir Solution</button>
-                <div id="ex2" class="solution-box">
-                    Puisque $12,5 > 3,84$, on <strong>rejette l'indépendance</strong>. <br>
-                    Il existe un lien significatif entre les deux variables.
-                </div>
-
-                <div class="exercise-title" style="margin-top:40px;">🔥 Question 3 : Échantillonnage</div>
-                <p>Si la taille de l'échantillon $n$ est multipliée par 4, que devient la largeur de l'IC ?</p>
-                <button class="btn-solution" onclick="toggleSolution('ex3')">Voir Solution</button>
-                <div id="ex3" class="solution-box">
-                    La largeur est divisée par $\sqrt{4} = 2$. <br>
-                    <strong>L'intervalle devient deux fois plus précis.</strong>
+        <div id="exam" class="section">
+            <h1>💎 Examen Final de Synthèse</h1>
+            <div class="quiz-item">
+                <span class="question-text">Problème : Écart de Salaire</span>
+                <p>Moyenne Hommes : 2500€ ($s'=400, n=100$). Moyenne Femmes : 2350€ ($s'=350, n=100$). <br> Testez l'égalité des moyennes au seuil de 5%.</p>
+                <button class="btn-action" onclick="toggle('sol-exam')">Voir la Correction</button>
+                <div id="sol-exam" class="correction-box">
+                    Statistique $T = \frac{2500 - 2350}{\sqrt{\frac{400^2}{100} + \frac{350^2}{100}}} = \frac{150}{\sqrt{1600 + 1225}} = \frac{150}{53.15} = \mathbf{2.82}$. <br>
+                    Seuil critique $Z=1.96$. <br>
+                    $2.82 > 1.96 \implies$ Rejet de l'égalité. L'écart est significatif.
                 </div>
             </div>
         </div>
@@ -525,22 +498,17 @@
     </main>
 
     <script>
-        function openSection(id) {
+        function show(id) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav ul li').forEach(li => li.classList.remove('active'));
-            
             document.getElementById(id).classList.add('active');
             event.currentTarget.classList.add('active');
             window.scrollTo(0,0);
         }
 
-        function toggleSolution(id) {
+        function toggle(id) {
             let el = document.getElementById(id);
-            if (el.style.display === "block") {
-                el.style.display = "none";
-            } else {
-                el.style.display = "block";
-            }
+            el.style.display = (el.style.display === "block") ? "none" : "block";
         }
     </script>
 </body>
